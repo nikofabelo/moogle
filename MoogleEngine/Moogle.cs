@@ -28,6 +28,7 @@ public static class Moogle
         Simbolo ~ debe hacer que las palabras aparezcan por defecto unidas mientras mas alto mas score
         Simbolo * adquiere prioridad la palabra por cada uno que aparezca
         Simbolo Anyelse
+        Enter
         Palabras similares misma raiz devolver score menor
         Palabra similares aun menor score
         Con menos de 5 resultados brindar suggestion de la clase SearchResult con query similar pero existente
