@@ -36,15 +36,16 @@ public static class Moogle
         Google-like
         Extensibilidad, Git update (MoogleServer) */
 
-        string[] directoryFiles = Directory.GetFiles("../Content")[1..];
+        string[] directoryFiles = Directory.GetFiles("../Content")[1..]; // TODO CASE FILENAME BEFORE .GIT
         string[] fileSet = new string[directoryFiles.Length];
         for(int i = 0; i < directoryFiles.Length; i++)
             fileSet[i] = File.ReadAllText(directoryFiles[i]); // TODO CATCH EXCEPTION
         string[][] dataSet = new string[fileSet.Length][];
         for(int i = 0; i < fileSet.Length; i++)
         {
-            // Regex.Replace(input, "[^a-zA-Z0-9 ]", "");
-            dataSet[i] = fileSet[i].Split();
+            dataSet[i] = Regex.Replace(
+                fileSet[i], "[^a-zA-Z0-9\n\t ]", "").Split();
+            Console.WriteLine(dataSet.Length);
         }
 
         SearchItem[] items = new SearchItem[3] {
