@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MoogleEngine;
 
@@ -36,14 +37,14 @@ public static class Moogle
         Extensibilidad, Git update (MoogleServer) */
 
         string[] directoryFiles = Directory.GetFiles("../Content")[1..];
-        string[] dataSet = new string[directoryFiles.Length];
-        foreach(string file in directoryFiles)
+        string[] fileSet = new string[directoryFiles.Length];
+        for(int i = 0; i < directoryFiles.Length; i++)
+            fileSet[i] = File.ReadAllText(directoryFiles[i]); // TODO CATCH EXCEPTION
+        string[][] dataSet = new string[fileSet.Length][];
+        for(int i = 0; i < fileSet.Length; i++)
         {
-            // string fileData;
-            // foreach(string line in
-            //     File.ReadAllText(file));
-            Console.Write(File.ReadAllText(file));
-            break;
+            // Regex.Replace(input, "[^a-zA-Z0-9 ]", "");
+            dataSet[i] = fileSet[i].Split();
         }
 
         SearchItem[] items = new SearchItem[3] {
