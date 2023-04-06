@@ -45,8 +45,8 @@ public static class Moogle
         {
             dataSet[i] = Regex.Replace(
                 fileSet[i], "[^a-zA-Z0-9\n\t ]", "").Split();
-            Console.WriteLine(dataSet.Length);
         }
+        Console.WriteLine("okdas");
 
         SearchItem[] items = new SearchItem[3] {
             new SearchItem("Hello World", "Lorem ipsum dolor sit amet", 0.9f),
