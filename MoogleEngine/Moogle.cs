@@ -34,19 +34,28 @@ public static class Moogle
         Palabra similares aun menor score
         Con menos de 5 resultados brindar suggestion de la clase SearchResult con query similar pero existente
         Google-like
-        Extensibilidad, Git update (MoogleServer) */
+        Extensibilidad, Git update (MoogleServer)
+        Strings similares:
+        +Distancia Levenshtein
+        +Similitud cosénica*/
 
-        string[] directoryFiles = Directory.GetFiles("../Content")[1..]; // TODO CASE FILENAME BEFORE .GIT
+        string[] directoryFiles = Directory.GetFiles("../Content", "*.txt");
         string[] fileSet = new string[directoryFiles.Length];
         for(int i = 0; i < directoryFiles.Length; i++)
-            fileSet[i] = File.ReadAllText(directoryFiles[i]); // TODO CATCH EXCEPTION
-        string[][] dataSet = new string[fileSet.Length][];
+            fileSet[i] = File.ReadAllText(directoryFiles[i]).ToLower(); // TODO CATCH EXCEPTION && UTF-8
+        string[][] dataSet = new string[fileSet.Length][]; // TODO DATASET TO MATRIX && MAKE DEV
         for(int i = 0; i < fileSet.Length; i++)
-        {
             dataSet[i] = Regex.Replace(
-                fileSet[i], "[^a-zA-Z0-9\n\t ]", "").Split();
-        }
-        Console.WriteLine("okdas");
+                fileSet[i], "[^a-zA-Z0-9\n\t ]", "").Split().Select(w => w.Trim()).ToArray(); // TODO \n\t
+        Dictionary<string, float> frequencies = new Dictionary<string, float>();
+        foreach(string[] document in dataSet)
+            foreach(string word in document)
+            {
+                if(!frequencies.ContainsKey(word))
+                    frequencies.Add(word, 1);
+                else
+                    frequencies[word] = frequencies[word]++;
+            }
 
         SearchItem[] items = new SearchItem[3] {
             new SearchItem("Hello World", "Lorem ipsum dolor sit amet", 0.9f),
