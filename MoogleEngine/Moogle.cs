@@ -44,7 +44,7 @@ public static class Moogle
         for(int i = 0; i < directoryFiles.Length; i++)
             fileSet[i] = File.ReadAllText(directoryFiles[i]).ToLower(); // TODO CATCH EXCEPTION && UTF-8
         string[][] dataSet = new string[fileSet.Length][]; // TODO DATASET TO MATRIX && MAKE DEV
-        for(int i = 0; i < fileSet.Length; i++)
+        for(int i = 0; i < fileSet.Length; i++) // TODO POE, DOCS, STEPS, CSS, App.razor
             dataSet[i] = Regex.Replace(
                 fileSet[i], "[^a-zA-Z0-9\n\t ]", "").Split().Select(w => w.Trim()).ToArray(); // TODO \n\t
         Dictionary<string, float> frequencies = new Dictionary<string, float>();
