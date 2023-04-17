@@ -2,13 +2,79 @@
 
 <PageTitle>Moogle!</PageTitle>
 
-<body>
+<style>
+	body {
+		background-image: url('img/search.jpg');
+		background-size: cover;
+		display: flex;
+		flex-direction: column;
+		font-weight: bold;
+		height: 100vh;
+		justify-content: center;
+		text-shadow: 2px 2px #404040;
+	}
+	h1 {
+		color: yellow;
+		font-size: 100px;
+		font-weight: inherit;
+		text-shadow: inherit;
+	}
+	input {
+		background-color: rgba(0, 0, 0, 0.3);
+		border: none;
+		border-radius: 20px;
+		color: white;
+		font-size: 1.2em;
+		line-height: 2em;
+		width: 50%;
+	}
+	input::placeholder {
+		color: lightgray;
+	}
+	.search-box {
+		display: inline-flex;
+		align-items: center;
+		background-color: rgba(0, 0, 0, 0.3);
+		border-radius: 50px;
+		overflow: hidden;
+		width: 50%;
+	}
+	.search-box input {
+		background-color: transparent;
+		border: none;
+		color: white;
+		font-size: 1.2em;
+		line-height: 2em;
+		padding: 5px 25px;
+		width: 100%;
+	}
+	.search-box button {
+		background-color: transparent;
+		border: none;
+	}
+	.btn:focus {
+		box-shadow: none;
+	}
+	.search-box button:hover {
+		background: none;
+		cursor: pointer;
+	}
+	.search-box input::placeholder {
+		color: lightgray;
+	}
+</style>
 
-<h1>🔍 Moogle!</h1>
-
-<input class="p-1 my-4" @bind="query" placeholder="Introduzca su búsqueda">
-
-<button type="default" class="btn btn-primary" @onclick="RunQuery">🔍 Buscar</button>
+<html>
+	<h1>🔍 Moogle!</h1>
+	<div class="search-box p-1 my-4">
+		<input @bind="query" placeholder="Introduzca su búsqueda..." onfocus="this.style.outline='none';">
+		<button type="default" class="btn" @onclick="RunQuery">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" viewBox="0 0 24 24" width="24" height="24">
+				<path d="M9.5 16a6.5 6.5 0 1 1 4.798-2.13l4.45 4.45a1 1 0 0 1-1.414 1.414l-4.45-4.45A6.445 6.445 0 0 1 9.5 16zm0-11a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
+			</svg>
+		</button>
+	</div>
+</html>
 
 @if (!string.IsNullOrEmpty(result.Suggestion)) {
     <div class="suggestion">
@@ -25,7 +91,7 @@
         </div>
     </li>
 }
-</ul></body>
+</ul>
 
 @code {
     private string query = "";
