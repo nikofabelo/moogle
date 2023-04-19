@@ -1,41 +1,42 @@
 ﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-    <NotFound>
-        <PageTitle>404</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <style>
-                body {
-                    background-image: url('img/404.jpg');
-                    background-size: cover
-                }
-                div {
-                    display: flex;
-                    flex-direction: column;
-                    font-weight: bold;
-                    height: 100vh;
-                    justify-content: center;
-                    text-shadow: 2px 2px #404040
-                }
-                h1 {
-                    color: yellow;
-                    font-size: 200px;
-                    font-weight: inherit;
-                    text-shadow: inherit
-                }
-                p {
-                    color: white;
-                    font-size: 30px;
-                    font-weight: inherit;
-                    text-shadow: inherit
-                }
-            </style>
-            <div>
-                <h1>404</h1>
-                <p>We couldn't find what you were looking for.</p>
-            </div>
-        </LayoutView>
-    </NotFound>
+	<Found Context="routeData">
+		<RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
+	</Found>
+	<NotFound>
+		<PageTitle>404</PageTitle>
+		<LayoutView Layout="@typeof(MainLayout)">
+			<style>
+				body {
+					background-image: url('img/404.jpg');
+					background-size: cover;
+					overflow: hidden;
+				}
+				div {
+					display: flex;
+					flex-direction: column;
+					font-weight: bold;
+					height: 100vh;
+					justify-content: center;
+					text-shadow: 2px 2px #404040
+				}
+				h1 {
+					color: yellow;
+					font-size: 200px;
+					font-weight: inherit;
+					text-shadow: inherit
+				}
+				p {
+					color: white;
+					font-size: 30px;
+					font-weight: inherit;
+					text-shadow: inherit
+				}
+			</style>
+			<div>
+				<h1>404</h1>
+				<p>We couldn't find what you were looking for.</p>
+			</div>
+		</LayoutView>
+	</NotFound>
 </Router>
