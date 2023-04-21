@@ -4,6 +4,7 @@ public static class Moogle
 {
 	public static SearchResult Query(string query) {
 		Dataset dataset = new Dataset("../Content");
+		Document queryDoc = new Document("q"+query);
 
 		SearchItem[] items = new SearchItem[12] {
 			new SearchItem("Hello World", "Lorem ipsum dolor sit amet", 0.9f),

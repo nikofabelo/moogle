@@ -2,9 +2,10 @@ namespace MoogleEngine;
 
 public class Debug
 {
-	public static void Print(string s)
+	public static void TravelArray(double[] a)
 	{
-		Console.WriteLine(s);
+		foreach(double d in a)
+			Console.WriteLine(d);
 	}
 
 	public static void TravelArray(string[] a)
@@ -13,9 +14,15 @@ public class Debug
 			Console.WriteLine(s);
 	}
 
-	public static void TravelDict(Dictionary<string, float> d)
+	public static void TravelDict(Dictionary<string, double> d)
 	{
 		foreach(string key in d.Keys)
-			Console.WriteLine("{0}: {1}", key, d[key]);
+			Console.WriteLine("{0}:\t{1}", key, d[key]);
+	}
+
+	public static void TravelDictValues(Dictionary<string, double>  d)
+	{
+		foreach(double a in d.Values)
+			Console.WriteLine(a);
 	}
 }

@@ -3,7 +3,7 @@ namespace MoogleEngine;
 public class Dataset
 {
 	private string[] directoryFiles;
-	private Document[] documents;
+	private static Document[] documents;
 
 	public Dataset(string path)
 	{
@@ -14,15 +14,17 @@ public class Dataset
 		for(int i = 0; i < directoryFiles.Length; i++)
 			documents[i] = new Document(directoryFiles[i]);
 
-		// TODO POE, DOCS, STEPS;
-		// TODO DATASET TO MATRIX && MAKE DEV
+		// Matrix
+		documents[0].GetVector();
 	}
 
-	static void TravelArray(string[] a)
+	// Calculate IDF
+	public static double GetIDF(string word)
 	{
-		foreach(string b in a)
-		{
-			Console.WriteLine(b);
-		}
+		double dtf = 0;
+		foreach(Document document in documents)
+			if(document.GetTF(word) > 0) dtf += 1;
+		return Math.Log(documents.Length / dtf);
+		// IDF = log(Number of Documents / Number of Documents with Term)
 	}
 }
