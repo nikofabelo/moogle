@@ -2,17 +2,17 @@ namespace MoogleEngine;
 
 public class Vector
 {
-	private Dictionary<string, double> tf;
-	private double[] terms;
+	private double[] terms = new double[]{};
 
-	public Vector(Dictionary<string, double> tf)
+	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
 	{
-		Debug.TravelDictValues(tf);
-		terms = new double[tf.Count];
+		this.terms = new double[tf.Count];
 		for(int i = 0; i < tf.Count; i++)
-			terms[i] = Dataset.GetIDF(
-				tf.ElementAt(i).Key)*
-				tf.ElementAt(i).Value;
+		{
+			this.terms[i] = tf.ElementAt(i).Value*idf[tf.ElementAt(i).Key];
+		}
 		Debug.TravelArray(terms);
 	}
+
+	public int Length { get { return terms.Length; }}
 }

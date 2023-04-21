@@ -17,12 +17,12 @@ public class Debug
 	public static void TravelDict(Dictionary<string, double> d)
 	{
 		foreach(string key in d.Keys)
-			Console.WriteLine("{0}:\t{1}", key, d[key]);
+			Console.WriteLine("{0}:\t\t{1}", key, d[key]);
 	}
 
 	public static void TravelDictValues(Dictionary<string, double>  d)
 	{
-		foreach(double a in d.Values)
-			Console.WriteLine(a);
+		foreach(double v in d.Values)
+			Console.WriteLine(v);
 	}
 }
