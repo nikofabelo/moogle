@@ -24,50 +24,29 @@ public class Matrix
 				this.matrix[i,j] = v[j];
 			}
 		}
+
+		NormalizeMatrix();
 	}
 
-	public double[] NormalizeMatrix()
+	public void NormalizeMatrix()
 	{
-		Console.WriteLine("OK");
-        // Example document-term matrix
-        double[,] docTermMatrix = new double[,]
-        {
-            { 1, 2, 3 },
-            { 4, 5, 6 },
-            { 7, 8, 9 }
-        };
+		double[] rowNorms = new double[this.y];
+		for(int i = 0; i < this.y; i++)
+		{
+			double rowNorm = 0;
+			for(int j = 0; j < this.x; j++)
+			{
+				rowNorm += Math.Pow(this.matrix[i,j], 2);
+			}
+			rowNorms[i] = Math.Sqrt(rowNorm);
+		}
 
-        // Compute the Euclidean length of each row vector
-        double[] rowNorms = new double[docTermMatrix.GetLength(0)];
-        for (int i = 0; i < docTermMatrix.GetLength(0); i++)
-        {
-            double rowNorm = 0;
-            for (int j = 0; j < docTermMatrix.GetLength(1); j++)
-            {
-                rowNorm += Math.Pow(docTermMatrix[i, j], 2);
-            }
-            rowNorms[i] = Math.Sqrt(rowNorm);
-        }
-
-        // Divide each row vector by its Euclidean length to normalize it
-        for (int i = 0; i < docTermMatrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < docTermMatrix.GetLength(1); j++)
-            {
-                docTermMatrix[i, j] /= rowNorms[i];
-            }
-        }
-
-        // Print the normalized matrix
-        for (int i = 0; i < docTermMatrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < docTermMatrix.GetLength(1); j++)
-            {
-                Console.Write($"{docTermMatrix[i, j]:f2}\t");
-            }
-            Console.WriteLine();
-        }
-
-		return new double[0];
+		for(int i = 0; i < this.y; i++)
+		{
+			for(int j = 0; j < this.x; j++)
+			{
+				this.matrix[i,j] /= rowNorms[i];
+			}
+		}
 	}
 }
