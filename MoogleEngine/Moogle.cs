@@ -5,7 +5,7 @@ public static class Moogle
 	public static SearchResult Query(string query)
 	{
 		// III	Normalizar vectores de documentos dividiendo por tamagno Euclideano.
-		// IV	Repetir III y IV con el query.
+		// IV	Repetir con el query.
 		// V	Computar similitud cosenica entre el vector del query y cada documento.
 		// VI	Ordenar de mayor a menor los vectores documento segun la similitud cosenica.
 
@@ -14,6 +14,7 @@ public static class Moogle
 		Matrix matrix = corpus.GetMatrix();
 		double[] weights = matrix.NormalizeMatrix();
 		Debug.TravelArray(weights);
+		Console.WriteLine("OK 2");
 
 		//Document queryDoc = new Document("q"+query);
 

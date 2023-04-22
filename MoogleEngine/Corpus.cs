@@ -40,6 +40,10 @@ public class Corpus
 			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
 		documents = new Document[directoryFiles.Length];
 		for(int i = 0; i < directoryFiles.Length; i++)
+		{
+			// Console.WriteLine("\x1b[32;40minfo\x1b[0m: Reading documents ({0}/{1})\n\t{2}",
+			// 	i+1, directoryFiles.Length, directoryFiles[i]);
 			documents[i] = new Document(directoryFiles[i]);
+		}
 	}
 }

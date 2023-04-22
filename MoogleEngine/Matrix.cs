@@ -28,28 +28,46 @@ public class Matrix
 
 	public double[] NormalizeMatrix()
 	{
-		double[] weights = new double[this.y];
+		Console.WriteLine("OK");
+        // Example document-term matrix
+        double[,] docTermMatrix = new double[,]
+        {
+            { 1, 2, 3 },
+            { 4, 5, 6 },
+            { 7, 8, 9 }
+        };
 
-		double[] norms = new double[this.y];
-		for(int i = 0; i < this.y; i++)
-		{
-			double sum = 0;
-			for(int j = 0; j < this.x; j++)
-			{
-				sum += this.matrix[i,j]*this.matrix[i,j];
-			}
-			norms[i] = Math.Sqrt(sum);
-		}
+        // Compute the Euclidean length of each row vector
+        double[] rowNorms = new double[docTermMatrix.GetLength(0)];
+        for (int i = 0; i < docTermMatrix.GetLength(0); i++)
+        {
+            double rowNorm = 0;
+            for (int j = 0; j < docTermMatrix.GetLength(1); j++)
+            {
+                rowNorm += Math.Pow(docTermMatrix[i, j], 2);
+            }
+            rowNorms[i] = Math.Sqrt(rowNorm);
+        }
 
-		for(int i = 0; i < this.y; i++)
-		{
-			for(int j = 0; j < this.x; j++)
-			{
-				this.matrix[i,j] /= norms[i];
-			}
-			weights[i] = norms[i];
-		}
+        // Divide each row vector by its Euclidean length to normalize it
+        for (int i = 0; i < docTermMatrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < docTermMatrix.GetLength(1); j++)
+            {
+                docTermMatrix[i, j] /= rowNorms[i];
+            }
+        }
 
-		return weights;
+        // Print the normalized matrix
+        for (int i = 0; i < docTermMatrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < docTermMatrix.GetLength(1); j++)
+            {
+                Console.Write($"{docTermMatrix[i, j]:f2}\t");
+            }
+            Console.WriteLine();
+        }
+
+		return new double[0];
 	}
 }
