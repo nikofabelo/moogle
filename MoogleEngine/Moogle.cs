@@ -4,8 +4,6 @@ public static class Moogle
 {
 	public static SearchResult Query(string query)
 	{
-		// II	Hacer matriz donde cada fila representa un documento y cada columna un termino del documento,
-		// los valores son de TF-IDF.
 		// III	Normalizar vectores de documentos dividiendo por tamagno Euclideano.
 		// IV	Repetir III y IV con el query.
 		// V	Computar similitud cosenica entre el vector del query y cada documento.

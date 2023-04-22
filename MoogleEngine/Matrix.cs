@@ -13,18 +13,15 @@ public class Matrix
 			if(c > x) x = c;
 		}
 		int y = documents.Length;
-		this.matrix = new double[x,y];
+		this.matrix = new double[y,x];
 
 		for(int i = 0; i < y; i++)
 		{
 			Vector v = documents[i].GetVector(idf, x);
 			for(int j = 0; j < x; j++)
 			{
-				Console.WriteLine("i: {0}\tj: {1}\tv[j]: {2}", i, j, v[j]); // XXX
-				this.matrix[j,i] = v[j];
+				this.matrix[i,j] = v[j];
 			}
 		}
-
-		Debug.TravelMatrix(this.matrix);
 	}
 }

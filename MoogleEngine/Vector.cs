@@ -6,8 +6,7 @@ public class Vector
 
 	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf, int l)
 	{
-		if(l == 0) this.terms = new double[tf.Count];
-		else this.terms = new double[l];
+		this.terms = new double[l];
 		for(int i = 0; i < tf.Count; i++)
 		{
 			this.terms[i] = tf.ElementAt(i).Value*idf[tf.ElementAt(i).Key];
