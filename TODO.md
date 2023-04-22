@@ -15,6 +15,8 @@
 # V		Computar similitud cosenica entre el vector del query y cada documento.
 # VI	Ordenar de mayor a menor los vectores documento segun la similitud cosenica.
 
+- Query not maching score of document is 0.
+- Matrix to Array.
 - Buscar tambien palabras inexactas.
 - Menor Score cuando existen menos palabras exactas o coincidencias.
 - El orden de las palabras del Query no importa pero si las apariciones.

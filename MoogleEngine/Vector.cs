@@ -2,7 +2,7 @@ namespace MoogleEngine;
 
 public class Vector
 {
-	private double[] terms = new double[]{};
+	private double[] terms;
 
 	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
 	{
@@ -11,13 +11,10 @@ public class Vector
 		{
 			this.terms[i] = tf.ElementAt(i).Value*idf[tf.ElementAt(i).Key];
 		}
+		Normalize();
 	}
 
-	public int Length { get { return terms.Length; } }
-
-	public double this[int i] { get { return terms[i]; } }
-
-	public void Normalize()
+	public double CalculateNorm()
 	{
 		double norm = 0;
 		for(int j = 0; j < Length; j++)
@@ -25,8 +22,19 @@ public class Vector
 			norm += Math.Pow(this.terms[j], 2);
 		}
 		norm = Math.Sqrt(norm);
+		return norm;
+	}
 
-		// norm => 0
+	public double this[int i] { get { return terms[i]; } }
+
+	public double[] AsDouble() { return terms; } // TODO
+
+	public int Length { get { return terms.Length; } }
+
+	public void Normalize()
+	{
+		double norm = CalculateNorm();
+		// norm == 0 TODO
 		for(int j = 0; j < Length; j++)
 		{
 			terms[j] /= norm;

@@ -1,6 +1,6 @@
 namespace MoogleEngine;
 
-public class Debug
+public static class Debug
 {
 	public static void TravelArray(double[] a)
 	{
@@ -18,12 +18,6 @@ public class Debug
 	{
 		foreach(string key in d.Keys)
 			Console.WriteLine("{0}:\t\t{1}", key, d[key]);
-	}
-
-	public static void TravelDictValues(Dictionary<string, double>  d)
-	{
-		foreach(double v in d.Values)
-			Console.WriteLine(v);
 	}
 
 	public static void TravelMatrix(double[,] m)

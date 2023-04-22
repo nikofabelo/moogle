@@ -9,6 +9,5 @@ public class Query
 			if(!idf.ContainsKey(word))
 				idf[word] = Math.Log(corpusLength);
 		Vector vector = document.GetVector(idf);
-		vector.Normalize();
 	}
 }

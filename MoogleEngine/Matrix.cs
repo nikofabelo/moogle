@@ -28,6 +28,21 @@ public class Matrix
 		NormalizeMatrix();
 	}
 
+	public double[][] AsDoubles() // TODO
+	{
+		double[][] vectors = new double[this.y][];
+		for(int i = 0; i < this.y; i++)
+		{
+			double[] vector = new double[this.x];
+			for(int j = 0; j < this.x; j++)
+			{
+				vector[j] = this.matrix[i,j];
+			}
+			vectors[i] = vector;
+		}
+		return vectors;
+	}
+
 	public void NormalizeMatrix()
 	{
 		double[] rowNorms = new double[this.y];
