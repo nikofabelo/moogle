@@ -48,18 +48,18 @@ public class Document
 		try
 		{
 			Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
-			// if(!path.StartsWith('q'))
-			// {
+			if(!path.StartsWith("query_"))
+			{
 				this.words = File.ReadAllLines(path, Encoding.UTF8)
 					.SelectMany(line => r.Split(line.ToLower()))
 					.Where(w => !string.IsNullOrWhiteSpace(w))
 					.ToArray();
-			// }
-			// else
-			// {
-			// 	this.words = path.ToLower().Split().Select(w => w.Trim()).ToArray();
-			// 	Debug.TravelArray(this.words);
-			// }
+			}
+			else
+			{
+				this.words = r.Split(path.Substring("query_".Length).ToLower())
+					.Where(w => !string.IsNullOrWhiteSpace(w)).ToArray();
+			}
 		}
 		catch
 		{

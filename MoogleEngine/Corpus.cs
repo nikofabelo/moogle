@@ -11,6 +11,10 @@ public class Corpus
 		CalculateIDF();
 	}
 
+	public Dictionary<string, double> GetIDF() { return this.idf; }
+
+	public int Length { get { return this.documents.Length; } }
+
 	public Matrix GetMatrix()
 	{
 		return new Matrix(documents, idf);

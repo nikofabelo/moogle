@@ -16,4 +16,20 @@ public class Vector
 	public int Length { get { return terms.Length; } }
 
 	public double this[int i] { get { return terms[i]; } }
+
+	public void Normalize()
+	{
+		double norm = 0;
+		for(int j = 0; j < Length; j++)
+		{
+			norm += Math.Pow(this.terms[j], 2);
+		}
+		norm = Math.Sqrt(norm);
+
+		// norm => 0
+		for(int j = 0; j < Length; j++)
+		{
+			terms[j] /= norm;
+		}
+	}
 }
