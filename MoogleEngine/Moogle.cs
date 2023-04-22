@@ -12,6 +12,8 @@ public static class Moogle
 		Corpus corpus = new Corpus("../Content");
 
 		Matrix matrix = corpus.GetMatrix();
+		double[] weights = matrix.NormalizeMatrix();
+		Debug.TravelArray(weights);
 
 		//Document queryDoc = new Document("q"+query);
 

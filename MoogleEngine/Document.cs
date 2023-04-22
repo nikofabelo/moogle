@@ -25,9 +25,9 @@ public class Document
 		return tf.Count;
 	}
 
-	public Vector GetVector(Dictionary<string, double> idf, int l)
+	public Vector GetVector(Dictionary<string, double> idf)
 	{
-		return new Vector(tf, idf, l);
+		return new Vector(tf, idf);
 	}
 
 	public void CalculateTF()
