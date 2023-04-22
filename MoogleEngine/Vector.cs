@@ -2,7 +2,7 @@ namespace MoogleEngine;
 
 public class Vector
 {
-	public double[] terms = new double[]{};
+	private double[] terms = new double[]{};
 
 	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf, int l)
 	{
@@ -18,10 +18,7 @@ public class Vector
 		}
 	}
 
-	public int Length { get { return terms.Length; }}
+	public int Length { get { return terms.Length; } }
 
-	public double this[int i]
-	{
-		get { return terms[i]; }
-	}
+	public double this[int i] { get { return terms[i]; } }
 }

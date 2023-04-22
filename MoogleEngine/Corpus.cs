@@ -4,12 +4,10 @@ public class Corpus
 {
 	private Dictionary<string, double> idf = new Dictionary<string, double>();
 	private Document[] documents = new Document[]{};
-	private string path;
 
 	public Corpus(string path)
 	{
-		this.path = path;
-		ReadDocuments();
+		ReadDocuments(path);
 		CalculateIDF();
 	}
 
@@ -36,10 +34,10 @@ public class Corpus
 		}
 	}
 
-	public void ReadDocuments()
+	public void ReadDocuments(string path)
 	{
 		string[] directoryFiles = Directory.GetFiles(
-			this.path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
+			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
 		documents = new Document[directoryFiles.Length];
 		for(int i = 0; i < directoryFiles.Length; i++)
 			documents[i] = new Document(directoryFiles[i]);

@@ -6,35 +6,25 @@ public class Matrix
 
 	public Matrix(Document[] documents, Dictionary<string, double> idf)
 	{
-		int y = 0;
+		int x = 0;
 		foreach(Document document in documents)
 		{
-			Vector v = document.GetVector(idf, y);
-			if(v.Length > y)
-				y = v.Length;
+			int c = document.GetWordCount();
+			if(c > x) x = c;
 		}
-		int x = documents.Length;
-		this.matrix = new double[y,x];
+		int y = documents.Length;
+		this.matrix = new double[x,y];
 
-		// for(int i = 0; i < x; i++)
-		// {
-		// 	for(int j = 0; j < y; j++)
-		// 	{
-		// 		this.matrix[i,j] = documents[i].GetVector(idf, x)[j];
-		// 	}
-		// }
-
-		for(int i = 0; i < x; i++)
+		for(int i = 0; i < y; i++)
 		{
-			Vector v = documents[i].GetVector(idf, y);
-			Console.WriteLine(documents[i].GetPath()); // XXX
-			for(int j = 0; j < v.Length; j++)
+			Vector v = documents[i].GetVector(idf, x);
+			for(int j = 0; j < x; j++)
 			{
-				Console.WriteLine("i: {0}\tj: {1}\tv[j]: {2}", i, j, v[j]);
+				Console.WriteLine("i: {0}\tj: {1}\tv[j]: {2}", i, j, v[j]); // XXX
 				this.matrix[j,i] = v[j];
 			}
 		}
 
-		// Debug.TravelMatrix(this.matrix);
+		Debug.TravelMatrix(this.matrix);
 	}
 }

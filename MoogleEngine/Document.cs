@@ -7,20 +7,22 @@ public class Document
 {
 	public string[] words = new string[]{};
 	private Dictionary<string, double> tf = new Dictionary<string, double>();
-	string path; // XXX
+
 	public Document(string path)
 	{
-		this.path = path; // XXX
 		ReadDocument(path);
 		CalculateTF();
 	}
-
-	public string GetPath() {return this.path;} // XXX
 
 	public double GetTF(string word)
 	{
 		try { return tf[word]; }
 		catch { return 0; }
+	}
+
+	public int GetWordCount()
+	{
+		return tf.Count;
 	}
 
 	public Vector GetVector(Dictionary<string, double> idf, int l)
