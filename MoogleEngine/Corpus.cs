@@ -34,7 +34,6 @@ public class Corpus
 				}
 			}
 		}
-		Debug.TravelDict(idf);
 	}
 
 	public void ReadDocuments()

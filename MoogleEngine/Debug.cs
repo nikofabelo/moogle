@@ -25,4 +25,15 @@ public class Debug
 		foreach(double v in d.Values)
 			Console.WriteLine(v);
 	}
+
+	public static void TravelMatrix(double[,] m)
+	{
+		for(int i = 0; i < m.GetLength(0); i++)
+		{
+			for(int j = 0; j < m.GetLength(1); j++)
+			{
+				Console.WriteLine(m[i,j]);
+			}
+		}
+	}
 }
