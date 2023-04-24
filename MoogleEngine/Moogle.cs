@@ -11,21 +11,25 @@ public static class Moogle
 		Corpus corpus = new Corpus("../Content");
 		Inform("Generating Matrix...");
 		Matrix matrix = corpus.GetMatrix();
-		Inform("Vectorizing Query: ({queryStr})");
+		Inform("Vectorizing Query: \""+queryStr+"\"");
 		Query query = new Query(queryStr, corpus.GetIDF(), corpus.Length);
 
-		Inform("Computing cosine similarity...");
+		Inform("Computing Cosine Similarity...");
+
+		foreach(double[] d in matrix.AsDoubles())
+		{
+			// Debug.TravelArray(d);
+			// Debug.TravelArray(query.GetVector().AsDouble());
+			// double cos = ()/(d);
+			// Console.WriteLine(cos);
+		}
 
 		// cosO = (dotProduct(d2, q))/(normVector(d2) * normVector(q))
-		// foreach(double[] d in matrix.AsDoubles())
-		// {
-		// 	double cos = ()/();
-		// }
-		// // dot product = sum(xi * yi) for i = 1 to n,
-		// // where xi and yi are the ith elements of the two vectors,
-		// // and n is the number of elements in the vectors.
+		// dot product = sum(xi * yi) for i = 1 to n,
+		// where xi and yi are the ith elements of the two vectors,
+		// and n is the number of elements in the vectors.
 
-		Inform("All Done!");
+		Inform("All Done! 👍");
 
 		SearchItem[] items = new SearchItem[12] {
 			new SearchItem("Hello World", "Lorem ipsum dolor sit amet", 0.9f),
@@ -47,6 +51,6 @@ public static class Moogle
 
 	public static void Inform(string msg)
 	{
-		Console.WriteLine("\x1b[32;40minfo\x1b[0m: {msg}");
+		Console.WriteLine("\x1b[33;40mMoogleEngine\x1b[0m: {0}", msg);
 	}
 }

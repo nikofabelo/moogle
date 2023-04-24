@@ -2,6 +2,34 @@ namespace MoogleEngine;
 
 public class Matrix
 {
+	private Vector[] vectors;
+
+	public Matrix(Document[] documents, Dictionary<string, double> idf)
+	{
+		// FIXME Dimension x
+		this.vectors = new Vector[documents.Length];
+
+		for(int i = 0; i < documents.Length; i++)
+		{
+			this.vectors[i] = documents[i].GetVector(idf);
+		}
+	}
+
+	public double[][] AsDoubles() // TODO
+	{
+		double[][] vectors = new double[this.vectors.Length][];
+		for(int i = 0; i < this.vectors.Length; i++)
+		{
+			vectors[i] = this.vectors[i].AsDouble();
+		}
+		return vectors;
+	}
+}
+
+/** namespace MoogleEngine; XXX
+
+public class Matrix
+{
 	private double[,] matrix;
 	private int x, y;
 
@@ -64,4 +92,4 @@ public class Matrix
 			}
 		}
 	}
-}
+} */

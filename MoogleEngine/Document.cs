@@ -20,7 +20,7 @@ public class Document
 		catch { return 0; }
 	}
 
-	public int GetWordCount()
+	public int GetTermCount()
 	{
 		return tf.Count;
 	}
