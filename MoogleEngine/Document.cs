@@ -20,11 +20,6 @@ public class Document
 		catch { return 0; }
 	}
 
-	public int GetTermCount()
-	{
-		return tf.Count;
-	}
-
 	public string[] Words { get { return this.words; } }
 
 	public Vector GetVector(Dictionary<string, double> idf)
@@ -32,7 +27,7 @@ public class Document
 		return new Vector(tf, idf);
 	}
 
-	public void CalculateTF()
+	private void CalculateTF()
 	{
 		foreach(string word in this.words)
 		{
@@ -45,7 +40,7 @@ public class Document
 			this.tf[word] /= this.words.Length;
 	}
 
-	public void ReadDocument(string path)
+	private void ReadDocument(string path)
 	{
 		Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
 		if(!path.StartsWith("q_"))

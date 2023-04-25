@@ -14,7 +14,7 @@ public class Vector
 		Normalize();
 	}
 
-	public double CalculateNorm()
+	private double CalculateNorm()
 	{
 		double norm = 0;
 		for(int j = 0; j < Length; j++)
@@ -31,7 +31,7 @@ public class Vector
 
 	public int Length { get { return this.items.Length; } }
 
-	public void Normalize()
+	private void Normalize()
 	{
 		double norm = CalculateNorm();
 		// TODO norm == 0
