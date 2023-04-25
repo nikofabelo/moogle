@@ -5,8 +5,8 @@ namespace MoogleEngine;
 
 public class Document
 {
-	public string[] words = new string[]{};
 	private Dictionary<string, double> tf = new Dictionary<string, double>();
+	private string[] words = new string[]{};
 
 	public Document(string path)
 	{
@@ -47,25 +47,25 @@ public class Document
 
 	public void ReadDocument(string path)
 	{
-		try
+		Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
+		if(!path.StartsWith("q_"))
 		{
-			Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
-			if(!path.StartsWith("q_"))
+			try
 			{
 				this.words = File.ReadAllLines(path, Encoding.UTF8)
 					.SelectMany(line => r.Split(line.ToLower()))
 					.Where(w => !string.IsNullOrWhiteSpace(w))
 					.ToArray();
 			}
-			else
+			catch
 			{
-				this.words = r.Split(path.Substring("q_".Length).ToLower())
-					.Where(w => !string.IsNullOrWhiteSpace(w)).ToArray();
+				throw new IOException("Document not processed: "+path);
 			}
 		}
-		catch
+		else
 		{
-			throw new IOException("Document not processed: "+path);
+			this.words = r.Split(path.Substring("q_".Length).ToLower())
+				.Where(w => !string.IsNullOrWhiteSpace(w)).ToArray();
 		}
 	}
 }

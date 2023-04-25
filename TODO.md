@@ -15,6 +15,8 @@
 # V		Computar similitud cosenica entre el vector del query y cada documento.
 # VI	Ordenar de mayor a menor los vectores documento segun la similitud cosenica.
 
+# No carga con muchos documentos ?
+# Tiempo de espera
 - No recrea corpus en Query.
 - Recrea Matrix en cambios.
 - Query not maching score of document is 0.

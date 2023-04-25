@@ -7,6 +7,8 @@ public static class Moogle
 		// TODO
 		// V	Computar similitud cosenica entre el vector del query y cada documento.
 		// VI	Ordenar de mayor a menor los vectores documento segun la similitud cosenica.
+		int t0 = Environment.TickCount;
+
 		Inform("Loading Corpus...");
 		Corpus corpus = new Corpus("../Content");
 		Inform("Generating Matrix...");
@@ -27,7 +29,9 @@ public static class Moogle
 		// where xi and yi are the ith elements of the two vectors,
 		// and n is the number of elements in the vectors.
 
-		Inform("All Done! 👍");
+		TimeSpan t = TimeSpan.FromMilliseconds(Environment.TickCount-t0);
+		string time = string.Format("{0:D2} minutes, {1:D2} seconds", t.Minutes, t.Seconds);
+		Inform("All Done! 👍 "+time);
 
 		SearchItem[] items = new SearchItem[12] {
 			new SearchItem("Hello World", "Lorem ipsum dolor sit amet", 0.9f),

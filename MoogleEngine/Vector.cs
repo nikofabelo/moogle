@@ -25,11 +25,11 @@ public class Vector
 		return norm;
 	}
 
-	public double this[int i] { get { return items[i]; } }
+	public double this[int i] { get { return this.items[i]; } }
 
-	public double[] AsDouble() { return items; } // XXX
+	public double[] AsDouble() { return this.items; } // XXX
 
-	public int Length { get { return items.Length; } }
+	public int Length { get { return this.items.Length; } }
 
 	public void Normalize()
 	{
@@ -37,7 +37,7 @@ public class Vector
 		// TODO norm == 0
 		for(int j = 0; j < Length; j++)
 		{
-			items[j] /= norm;
+			this.items[j] /= norm;
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class Corpus
 	{
 		foreach(Document d in this.documents)
 		{
-			foreach(string word in d.words)
+			foreach(string word in d.Words)
 			{
 				if(!idf.ContainsKey(word))
 				{
