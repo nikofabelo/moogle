@@ -29,15 +29,15 @@ public class Document
 
 	private void CalculateTF()
 	{
-		foreach(string word in this.words)
+		foreach(string word in Words)
 		{
 			if(!this.tf.ContainsKey(word))
 				this.tf[word] = 1;
 			else
 				this.tf[word]++;
 		}
-		foreach(string word in this.words)
-			this.tf[word] /= this.words.Length;
+		foreach(string word in Words)
+			this.tf[word] /= Words.Length;
 	}
 
 	private void ReadDocument(string path)

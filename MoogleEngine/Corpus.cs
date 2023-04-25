@@ -11,14 +11,11 @@ public class Corpus
 		CalculateIDF();
 	}
 
-	public Dictionary<string, double> GetIDF() { return this.idf; }
+	public Dictionary<string, double> IDF { get { return this.idf; } }
 
 	public int Length { get { return this.documents.Length; } }
 
-	public Matrix GetMatrix()
-	{
-		return new Matrix(documents, idf);
-	}
+	public Matrix Matrix { get { return new Matrix(documents, IDF); } }
 
 	private void CalculateIDF()
 	{
@@ -26,12 +23,12 @@ public class Corpus
 		{
 			foreach(string word in d.Words)
 			{
-				if(!idf.ContainsKey(word))
+				if(!IDF.ContainsKey(word))
 				{
 					double dtf = 0;
 					foreach(Document document in this.documents)
 						if(document.GetTF(word) > 0) dtf += 1;
-					idf[word] = Math.Log(this.documents.Length / dtf);
+					IDF[word] = Math.Log(Length / dtf);
 				}
 			}
 		}
@@ -41,11 +38,11 @@ public class Corpus
 	{
 		string[] directoryFiles = Directory.GetFiles(
 			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
-		documents = new Document[directoryFiles.Length];
-		for(int i = 0; i < directoryFiles.Length; i++)
+		this.documents = new Document[directoryFiles.Length];
+		for(int i = 0; i < Length; i++)
 		{
 			// Moogle.Inform("Reading documents ("+(i+1)+"/"+directoryFiles.Length+")\n\t"+directoryFiles[i]); FIXME
-			documents[i] = new Document(directoryFiles[i]);
+			this.documents[i] = new Document(directoryFiles[i]);
 		}
 	}
 }

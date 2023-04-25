@@ -8,23 +8,23 @@ public class Matrix
 	{
 		// FIXME Dimension x
 		this.vectors = new Vector[documents.Length];
-		for(int i = 0; i < documents.Length; i++)
+		for(int i = 0; i < Length; i++)
 			this.vectors[i] = documents[i].GetVector(idf);
 	}
 
-	public Vector this[int i] { get { return vectors[i]; } }
+	public Vector this[int i] { get { return this.vectors[i]; } }
 
 	public double[][] AsDoubles() // XXX
 	{
-		double[][] vectors = new double[this.vectors.Length][];
-		for(int i = 0; i < this.vectors.Length; i++)
+		double[][] vectors = new double[Length][];
+		for(int i = 0; i < Length; i++)
 		{
 			vectors[i] = this.vectors[i].AsDouble();
 		}
 		return vectors;
 	}
 
-	public int Length { get { return vectors.Length; } }
+	public int Length { get { return this.vectors.Length; } }
 }
 
 /** namespace MoogleEngine; XXX

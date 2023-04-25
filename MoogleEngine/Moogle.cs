@@ -12,9 +12,9 @@ public static class Moogle
 		Inform("Loading Corpus...");
 		Corpus corpus = new Corpus("../Content");
 		Inform("Generating Matrix...");
-		Matrix matrix = corpus.GetMatrix();
+		Matrix matrix = corpus.Matrix;
 		Inform("Vectorizing Query: \""+queryStr+"\"");
-		Vector query = new Query(queryStr, corpus.GetIDF()).Vector;
+		Vector query = new Query(queryStr, corpus.IDF).Vector;
 
 		Inform("Computing Cosine Similarity...");
 
