@@ -12,18 +12,16 @@ public static class Moogle
 		Inform("Generating Matrix...");
 		Matrix matrix = corpus.GetMatrix();
 		Inform("Vectorizing Query: \""+queryStr+"\"");
-		Query query = new Query(queryStr, corpus.GetIDF(), corpus.Length);
+		Vector query = new Query(queryStr, corpus.GetIDF()).Vector;
 
 		Inform("Computing Cosine Similarity...");
 
-		foreach(double[] d in matrix.AsDoubles())
+		double[] cosines = new double[corpus.Length];
+		for(int i = 0; i < matrix.Length; i++)
 		{
-			// Debug.TravelArray(d);
-			// Debug.TravelArray(query.GetVector().AsDouble());
-			// double cos = ()/(d);
-			// Console.WriteLine(cos);
+			//cosines[i] = ComputeCosine(query, matrix[i]);
 		}
-
+		//cosines = Quicksort(cosines);
 		// cosO = (dotProduct(d2, q))/(normVector(d2) * normVector(q))
 		// dot product = sum(xi * yi) for i = 1 to n,
 		// where xi and yi are the ith elements of the two vectors,

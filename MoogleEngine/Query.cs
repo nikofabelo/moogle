@@ -2,19 +2,16 @@ namespace MoogleEngine;
 
 public class Query
 {
-	private Vector vector;
+	private Vector queryVector;
 
-	public Query(string query, Dictionary<string, double> idf, int corpusLength)
+	public Query(string query, Dictionary<string, double> corpusIDF)
 	{
-		Document document = new Document("query_"+query);
-		foreach(string word in document.words)
-			if(!idf.ContainsKey(word))
-				idf[word] = Math.Log(corpusLength);
-		this.vector = document.GetVector(idf);
+		Document document = new Document("q_"+query);
+		foreach(string word in document.Words)
+			if(!corpusIDF.ContainsKey(word))
+				corpusIDF[word] = 0;
+		this.queryVector = document.GetVector(corpusIDF);
 	}
 
-	public double[] GetVector()
-	{
-		return this.vector.AsDouble();
-	}
+	public Vector Vector { get { return this.queryVector; } }
 }

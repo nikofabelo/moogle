@@ -25,6 +25,8 @@ public class Document
 		return tf.Count;
 	}
 
+	public string[] Words { get { return this.words; } }
+
 	public Vector GetVector(Dictionary<string, double> idf)
 	{
 		return new Vector(tf, idf);
@@ -48,7 +50,7 @@ public class Document
 		try
 		{
 			Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
-			if(!path.StartsWith("query_"))
+			if(!path.StartsWith("q_"))
 			{
 				this.words = File.ReadAllLines(path, Encoding.UTF8)
 					.SelectMany(line => r.Split(line.ToLower()))
@@ -57,7 +59,7 @@ public class Document
 			}
 			else
 			{
-				this.words = r.Split(path.Substring("query_".Length).ToLower())
+				this.words = r.Split(path.Substring("q_".Length).ToLower())
 					.Where(w => !string.IsNullOrWhiteSpace(w)).ToArray();
 			}
 		}

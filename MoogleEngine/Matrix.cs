@@ -15,7 +15,9 @@ public class Matrix
 		}
 	}
 
-	public double[][] AsDoubles() // TODO
+	public Vector this[int i] { get { return vectors[i]; } }
+
+	public double[][] AsDoubles() // XXX
 	{
 		double[][] vectors = new double[this.vectors.Length][];
 		for(int i = 0; i < this.vectors.Length; i++)
@@ -24,6 +26,8 @@ public class Matrix
 		}
 		return vectors;
 	}
+
+	public int Length { get { return vectors.Length; } }
 }
 
 /** namespace MoogleEngine; XXX
