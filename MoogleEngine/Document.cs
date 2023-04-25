@@ -5,7 +5,8 @@ namespace MoogleEngine;
 
 public class Document
 {
-	private Dictionary<string, double> tf = new Dictionary<string, double>();
+	private Dictionary<string, int> tf = new Dictionary<string, int>();
+	private static readonly Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
 	private string[] words = new string[]{};
 
 	public Document(string path)
@@ -16,8 +17,7 @@ public class Document
 
 	public double GetTF(string word)
 	{
-		try { return tf[word]; }
-		catch { return 0; }
+		return this.tf.TryGetValue(word, out int value) ? value : 0;
 	}
 
 	public string[] Words { get { return this.words; } }
@@ -31,7 +31,7 @@ public class Document
 	{
 		foreach(string word in this.words)
 		{
-			if(!tf.ContainsKey(word))
+			if(!this.tf.ContainsKey(word))
 				this.tf[word] = 1;
 			else
 				this.tf[word]++;
@@ -42,7 +42,6 @@ public class Document
 
 	private void ReadDocument(string path)
 	{
-		Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
 		if(!path.StartsWith("q_"))
 		{
 			try

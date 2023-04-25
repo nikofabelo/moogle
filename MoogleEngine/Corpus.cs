@@ -20,7 +20,7 @@ public class Corpus
 		return new Matrix(documents, idf);
 	}
 
-	public void CalculateIDF()
+	private void CalculateIDF()
 	{
 		foreach(Document d in this.documents)
 		{
@@ -31,21 +31,20 @@ public class Corpus
 					double dtf = 0;
 					foreach(Document document in this.documents)
 						if(document.GetTF(word) > 0) dtf += 1;
-					if(dtf != 0) dtf = Math.Log(this.documents.Length / dtf);
-					idf[word] = dtf;
+					idf[word] = Math.Log(this.documents.Length / dtf);
 				}
 			}
 		}
 	}
 
-	public void ReadDocuments(string path)
+	private void ReadDocuments(string path)
 	{
 		string[] directoryFiles = Directory.GetFiles(
 			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
 		documents = new Document[directoryFiles.Length];
 		for(int i = 0; i < directoryFiles.Length; i++)
 		{
-			// Moogle.Inform("Reading documents ("+(i+1)+"/"+directoryFiles.Length+")\n\t"+directoryFiles[i]);
+			// Moogle.Inform("Reading documents ("+(i+1)+"/"+directoryFiles.Length+")\n\t"+directoryFiles[i]); FIXME
 			documents[i] = new Document(directoryFiles[i]);
 		}
 	}

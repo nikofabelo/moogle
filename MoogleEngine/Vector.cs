@@ -4,13 +4,11 @@ public class Vector
 {
 	private double[] items;
 
-	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
+	public Vector(Dictionary<string, int> tf, Dictionary<string, double> idf)
 	{
 		this.items = new double[tf.Count];
 		for(int i = 0; i < tf.Count; i++)
-		{
 			this.items[i] = tf.ElementAt(i).Value*idf[tf.ElementAt(i).Key];
-		}
 		Normalize();
 	}
 

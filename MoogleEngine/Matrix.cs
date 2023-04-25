@@ -8,11 +8,8 @@ public class Matrix
 	{
 		// FIXME Dimension x
 		this.vectors = new Vector[documents.Length];
-
 		for(int i = 0; i < documents.Length; i++)
-		{
 			this.vectors[i] = documents[i].GetVector(idf);
-		}
 	}
 
 	public Vector this[int i] { get { return vectors[i]; } }
