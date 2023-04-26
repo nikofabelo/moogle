@@ -25,10 +25,10 @@ public class Vector
 	private void Normalize()
 	{
 		CalculateNorm();
-		// TODO norm == 0
-		for(int j = 0; j < Length; j++)
+		// TODO norm == 0 < Query empty?
+		for(int i = 0; i < Length; i++)
 		{
-			this.items[j] /= this.norm;
+			this.items[i] /= Norm;
 		}
 	}
 

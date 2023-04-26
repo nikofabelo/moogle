@@ -17,17 +17,6 @@ public static class Debug
 	public static void TravelDict(Dictionary<string, double> d)
 	{
 		foreach(string key in d.Keys)
-			Console.WriteLine("{0}:\t\t{1}", key, d[key]);
-	}
-
-	public static void TravelMatrix(double[,] m)
-	{
-		for(int i = 0; i < m.GetLength(0); i++)
-		{
-			for(int j = 0; j < m.GetLength(1); j++)
-			{
-				Console.WriteLine(m[i,j]);
-			}
-		}
+			Console.WriteLine("{0}:\n\t{1}", key, d[key]);
 	}
 }

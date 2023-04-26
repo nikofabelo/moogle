@@ -6,8 +6,10 @@ namespace MoogleEngine;
 public class Document
 {
 	private Dictionary<string, int> tf = new Dictionary<string, int>();
-	private static readonly Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
+	private string name = "";
 	private string[] words = new string[]{};
+
+	static readonly Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
 
 	public Document(string path)
 	{
@@ -15,10 +17,12 @@ public class Document
 		CalculateTF();
 	}
 
-	public double GetTF(string word)
+	public int GetTF(string word)
 	{
 		return this.tf.TryGetValue(word, out int value) ? value : 0;
 	}
+
+	public string Name { get { return this.name; } }
 
 	public string[] Words { get { return this.words; } }
 
@@ -44,6 +48,7 @@ public class Document
 	{
 		if(!path.StartsWith("q_"))
 		{
+			this.name = Path.GetFileName(path);
 			try
 			{
 				this.words = File.ReadAllLines(path, Encoding.UTF8)

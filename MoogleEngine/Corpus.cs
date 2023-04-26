@@ -13,20 +13,22 @@ public class Corpus
 
 	public Dictionary<string, double> IDF { get { return this.idf; } }
 
-	public int Length { get { return this.documents.Length; } }
+	public Document[] Documents { get { return this.documents; } }
+
+	public int Length { get { return Documents.Length; } }
 
 	public Matrix Matrix { get { return new Matrix(documents, IDF); } }
 
 	private void CalculateIDF()
 	{
-		foreach(Document d in this.documents)
+		foreach(Document d in Documents)
 		{
 			foreach(string word in d.Words)
 			{
 				if(!IDF.ContainsKey(word))
 				{
 					double dtf = 0;
-					foreach(Document document in this.documents)
+					foreach(Document document in Documents)
 						if(document.GetTF(word) > 0) dtf += 1;
 					IDF[word] = Math.Log(Length / dtf);
 				}
