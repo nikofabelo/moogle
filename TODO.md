@@ -8,19 +8,11 @@
 # 7. Rank the results: Rank the search results by their cosine similarity scores in descending order. The top-ranked documents are the most relevant to the query.
 # 8. Present the results: Present the search results to the user in a user-friendly way, such as by displaying the document titles and snippets or by providing links to the full documents.
 
-# I		Leer documentos y dividir palabras.
-# II	Hacer matriz de palabras donde cada fila representa un documento y cada columna un termino del documento, los valores son de TF-IDF.
 # III	Normalizar vectores de documentos dividiendo por tamagno Euclideano.
-# IV	Repetir III y IV con el query.
-# V		Computar similitud cosenica entre el vector del query y cada documento.
-# VI	Ordenar de mayor a menor los vectores documento segun la similitud cosenica.
 
-# No carga con muchos documentos ?
-# Tiempo de espera
 - No recrea corpus en Query.
 - Recrea Matrix en cambios.
 - Query not maching score of document is 0.
-- Matrix to Array.
 - Buscar tambien palabras inexactas.
 - Menor Score cuando existen menos palabras exactas o coincidencias.
 - El orden de las palabras del Query no importa pero si las apariciones.

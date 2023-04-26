@@ -2,6 +2,7 @@ namespace MoogleEngine;
 
 public class Vector
 {
+	private double norm = 0;
 	private double[] items;
 
 	public Vector(Dictionary<string, int> tf, Dictionary<string, double> idf)
@@ -12,30 +13,30 @@ public class Vector
 		Normalize();
 	}
 
-	private double CalculateNorm()
+	private void CalculateNorm()
 	{
-		double norm = 0;
 		for(int i = 0; i < Length; i++)
 		{
-			norm += Math.Pow(this.items[i], 2);
+			this.norm += Math.Pow(this.items[i], 2);
 		}
-		norm = Math.Sqrt(norm);
-		return norm;
+		this.norm = Math.Sqrt(this.norm);
 	}
+
+	private void Normalize()
+	{
+		CalculateNorm();
+		// TODO norm == 0
+		for(int j = 0; j < Length; j++)
+		{
+			this.items[j] /= this.norm;
+		}
+	}
+
+	public double Norm { get { return this.norm; } }
 
 	public double this[int i] { get { return this.items[i]; } }
 
 	public double[] AsDouble() { return this.items; } // XXX
 
 	public int Length { get { return this.items.Length; } }
-
-	private void Normalize()
-	{
-		double norm = CalculateNorm();
-		// TODO norm == 0
-		for(int j = 0; j < Length; j++)
-		{
-			this.items[j] /= norm;
-		}
-	}
 }
