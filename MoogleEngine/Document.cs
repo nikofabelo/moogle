@@ -5,7 +5,7 @@ namespace MoogleEngine;
 
 public class Document
 {
-	private Dictionary<string, int> tf = new Dictionary<string, int>();
+	private Dictionary<string, double> tf = new Dictionary<string, double>();
 	private string name = "";
 	private string snippet = "";
 	private string filePath = "";
@@ -19,9 +19,9 @@ public class Document
 		CalculateTF();
 	}
 
-	public int GetTF(string word)
+	public double GetTF(string word)
 	{
-		return this.tf.TryGetValue(word, out int value) ? value : 0;
+		return this.tf.TryGetValue(word, out double value) ? value : 0;
 	}
 
 	public string Name { get { return this.name; } }
@@ -42,9 +42,13 @@ public class Document
 		foreach(string word in Words)
 		{
 			if(!this.tf.ContainsKey(word))
+			{
 				this.tf[word] = 1;
+			}
 			else
+			{
 				this.tf[word]++;
+			}
 		}
 		foreach(string word in Words)
 			this.tf[word] /= Words.Length;
@@ -63,7 +67,7 @@ public class Document
 				
 				List<string> lines = new List<string>();
 				using(StreamReader sr = new StreamReader(path, Encoding.UTF8))
-					while(lines.Count < 18 && sr.Peek() >= 0)
+					while(lines.Count < 18 && sr.Peek() >= 0) // FIXME 18 ?
 						lines.Add(sr.ReadLine()!);
 				this.snippet = string.Join(" ", lines);
 			}

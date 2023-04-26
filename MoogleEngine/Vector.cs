@@ -5,7 +5,7 @@ public class Vector
 	private double norm = 0;
 	private double[] items;
 
-	public Vector(Dictionary<string, int> tf, Dictionary<string, double> idf)
+	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
 	{
 		this.items = new double[tf.Count];
 		for(int i = 0; i < Length; i++)
@@ -13,12 +13,21 @@ public class Vector
 		Normalize();
 	}
 
-	private void CalculateNorm()
+	private void CalculateNorm() // FIXME
 	{
 		for(int i = 0; i < Length; i++)
 		{
-			this.norm += Math.Pow(this.items[i], 2);
+			double item = this.items[i];
+			if(item != 0)
+			{
+				this.norm += Math.Pow(item, 2);
+			}
+			else if (double.IsNaN(item))
+			{
+				Console.WriteLine("NaN value found at index {0}", i);
+			}
 		}
+		Console.WriteLine(this.norm);
 		this.norm = Math.Sqrt(this.norm);
 	}
 
