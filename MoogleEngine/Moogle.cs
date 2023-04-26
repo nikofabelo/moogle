@@ -8,8 +8,10 @@ public static class Moogle
 
 		Inform("Loading Corpus...");
 		Corpus corpus = new Corpus("../Content");
+
 		Inform("Generating Matrix...");
 		Matrix matrix = corpus.Matrix;
+
 		Inform("Vectorizing Query: \""+queryStr+"\"");
 		Vector query = new Query(queryStr, corpus.IDF).Vector;
 
@@ -19,32 +21,30 @@ public static class Moogle
 		for(int i = 0; i < cosines.Length; i++)
 		{
 			cosines[i] = ComputeCosineSimilarity(query, matrix[i]);
-			//Console.WriteLine("{0}\t\t\t\t{1}", corpus.Documents[i].Name, cosines[i]);
+			Console.WriteLine("{0}\t\t\t\t{1}", corpus.Documents[i].Name, cosines[i]);
 		}
 		//Debug.TravelArray(cosines);
 
 		//cosines = Quicksort(cosines);
-		// cosO = (dotProduct(d2, q))/(normVector(d2) * normVector(q))
-		// dot product = sum(xi * yi) for i = 1 to n,
-		// where xi and yi are the ith elements of the two vectors,
-		// and n is the number of elements in the vectors.
 
-		TimeSpan t = TimeSpan.FromMilliseconds(Environment.TickCount-callTime);
-		string time = string.Format("{0:D2} minutes, {1:D2} seconds", t.Minutes, t.Seconds);
-		Inform("All Done! 👍 "+time);
+		TimeSpan time = TimeSpan.FromMilliseconds(
+			Environment.TickCount-callTime);
+		Inform("All Done! 👍 "+string.Format(
+			"{0:D2} minutes, {1:D2} seconds",
+			time.Minutes, time.Seconds));
 
 		List<SearchItem> items = new List<SearchItem>();
 		for(int i = 0; i < cosines.Length; i++)
 		{
 			double cosine = cosines[i];
-			if(cosine > 0)
-			{
-				string name = "Hello World";
-				string snippet = "Lorem ipsum dolor sit amet";
-				items.Add(new SearchItem(name, snippet, cosine));
-			}
+			Document document = corpus.Documents[i];
+			// if(cosine > 0)
+			// {
+				items.Add(new SearchItem(
+					document.Name, document.Snippet,
+					document.FilePath, cosine));
+			// }
 		}
-
 		return new SearchResult(items.ToArray(), queryStr);
 	}
 

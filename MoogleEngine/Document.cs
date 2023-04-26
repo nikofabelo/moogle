@@ -7,6 +7,8 @@ public class Document
 {
 	private Dictionary<string, int> tf = new Dictionary<string, int>();
 	private string name = "";
+	private string snippet = "";
+	private string filePath = "";
 	private string[] words = new string[]{};
 
 	static readonly Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
@@ -23,6 +25,10 @@ public class Document
 	}
 
 	public string Name { get { return this.name; } }
+
+	public string Snippet { get { return this.snippet; } }
+
+	public string FilePath { get { return this.filePath; } }
 
 	public string[] Words { get { return this.words; } }
 
@@ -48,18 +54,26 @@ public class Document
 	{
 		if(!path.StartsWith("q_"))
 		{
-			this.name = Path.GetFileName(path);
 			try
 			{
 				this.words = File.ReadAllLines(path, Encoding.UTF8)
 					.SelectMany(line => r.Split(line.ToLower()))
 					.Where(w => !string.IsNullOrWhiteSpace(w))
 					.ToArray();
+				
+				List<string> lines = new List<string>();
+				using(StreamReader sr = new StreamReader(path, Encoding.UTF8))
+					while(lines.Count < 18 && sr.Peek() >= 0)
+						lines.Add(sr.ReadLine()!);
+				this.snippet = string.Join(" ", lines);
 			}
 			catch
 			{
 				throw new IOException("Document not processed: "+path);
 			}
+			this.name = Path.GetFileName(path);
+			this.name = this.name.Substring(0, this.name.Length-4);
+			this.filePath = "/Content/"+Name+".txt";
 		}
 		else
 		{

@@ -75,7 +75,7 @@
 		padding: 50px 0;
 	}
 	.item {
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: rgba(0, 0, 0, 0.4);
 		border-radius: 20px;
 		padding: 10px;
 		margin-bottom: 20px;
@@ -89,35 +89,33 @@
 	}
 </style>
 
-<html>
-	<div class="content">
-		<h1>🔍 Moogle!</h1>
-		<div class="search-box p-1 my-4">
-			<input @bind="query" placeholder="Introduzca su búsqueda..." onfocus="this.style.outline='none';">
-			<button type="default" class="btn" @onclick="RunQuery">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" viewBox="0 0 24 24" width="24" height="24">
-					<path d="M9.5 16a6.5 6.5 0 1 1 4.798-2.13l4.45 4.45a1 1 0 0 1-1.414 1.414l-4.45-4.45A6.445 6.445 0 0 1 9.5 16zm0-11a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
-				</svg>
-			</button>
-		</div>
-		@if (!string.IsNullOrEmpty(result.Suggestion)) {
-			<div class="suggestion" style="color: #fff">
-				<p>¿Quisite decir <strong><a href="#">@result.Suggestion</a></strong>?</p>
-			</div>
-		}
-
-		<ul class="results">
-		@foreach (var item in result.Items()) {
-			<li>
-				<div class="item" style="color: #fff;">
-					<p style="color: green; text-shadow: none">@item.Title</p>
-					<p style="text-shadow: none; font-weight: 1">@item.Snippet</p>
-				</div>
-			</li>
-		}
-		</ul>
+<div class="content">
+	<h1>🔍 Moogle!</h1>
+	<div class="search-box p-1 my-4">
+		<input @bind="query" placeholder="Introduzca su búsqueda..." onfocus="this.style.outline='none';">
+		<button type="default" class="btn" @onclick="RunQuery">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" viewBox="0 0 24 24" width="24" height="24">
+				<path d="M9.5 16a6.5 6.5 0 1 1 4.798-2.13l4.45 4.45a1 1 0 0 1-1.414 1.414l-4.45-4.45A6.445 6.445 0 0 1 9.5 16zm0-11a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
+			</svg>
+		</button>
 	</div>
-</html>
+	@if (!string.IsNullOrEmpty(result.Suggestion)) {
+		<div class="suggestion" style="color: #fff">
+			<p>¿Quisiste decir <strong><a href="#">@result.Suggestion</a></strong>?</p>
+		</div>
+	}
+
+	<ul class="results">
+	@foreach (var item in result.Items()) {
+		<li>
+			<div class="item" style="color: #fff;">
+				<a style="color: green; text-shadow: none" href=@item.FilePath target="_blank">@item.Title</a>
+				<p style="text-shadow: none; font-weight: 1">@item.Snippet</p>
+			</div>
+		</li>
+	}
+	</ul>
+</div>
 
 @code {
 	private string query = "";

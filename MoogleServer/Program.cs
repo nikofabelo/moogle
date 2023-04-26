@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +14,14 @@ if (!app.Environment.IsDevelopment())
 	app.UseExceptionHandler("/Error");
 }
 
-
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetParent(
+            Directory.GetCurrentDirectory())!.FullName, "Content")),
+    RequestPath = "/Content"
+});
 
 app.UseRouting();
 
