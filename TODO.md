@@ -1,3 +1,4 @@
+# TODO
 # Check DOCs, Evaluation.
 # 1. Collect and preprocess your corpus: Collect the documents that you want to use for your search engine and preprocess them by removing stop words, stemming/lemmatizing the remaining words, and converting them to lowercase.
 # 2. Build the document-term matrix: Build a document-term matrix where each row represents a document and each column represents a term in the corpus vocabulary. The values in the matrix can be the raw term frequency or the TF-IDF weight of the corresponding term in the document. 

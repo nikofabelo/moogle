@@ -454,5 +454,5 @@ $RECYCLE.BIN/
 # !.vscode/launch.json
 # !.vscode/extensions.json
 
-# Folder to store data
+# Folder containing .txt files
 Content
