@@ -37,10 +37,10 @@ public static class Debug
 			Console.WriteLine("{0}:\n\t{1}", key, d[key]);
 	}
 
-	public static void TravelDict(Dictionary<double, Document> d)
+	public static void TravelDict(Dictionary<Document, double> d)
 	{
-		foreach(double key in d.Keys)
-			Console.WriteLine("{0}:\n\t{1}", key, d[key].Name);
+		foreach(Document key in d.Keys)
+			Console.WriteLine("{0}:\n\t{1}", key.Name, d[key]);
 	}
 
 	public static void TravelVector(Vector v)

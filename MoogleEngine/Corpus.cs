@@ -48,7 +48,7 @@ public class Corpus
 		this.documents = new Document[directoryFiles.Length];
 		for(int i = 0; i < this.documents.Length; i++)
 		{
-			// Moogle.Inform("Reading documents ("+(i+1)+"/"+directoryFiles.Length+")\n\t"+directoryFiles[i]); FIXME
+			Moogle.Inform("Reading Document ("+(i+1)+"/"+directoryFiles.Length+")\n\t"+directoryFiles[i]);
 			this.documents[i] = new Document(directoryFiles[i]);
 		}
 	}

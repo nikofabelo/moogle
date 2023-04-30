@@ -16,24 +16,25 @@ public static class Moogle
 		Vector query = new Query(queryStr, corpus.IDF).Vector;
 
 		Inform("Computing Cosine Similarity...");
-		Dictionary<double, Document> ranking = new Dictionary<double, Document>();
+		Dictionary<Document, double> ranking = new Dictionary<Document, double>();
+		Document[] documents = corpus.Documents;
 		for(int i = 0; i < corpus.Length; i++)
 		{
-			ranking.Add(ComputeCosineSimilarity(query, matrix[i]),
-				corpus.Documents[i]);
+			ranking.Add(documents[i],
+				ComputeCosineSimilarity(query, matrix[i])+i); // FIXME -i
 			Console.WriteLine("{0}\n\t{1}", corpus.Documents[i].Name,
 				ComputeCosineSimilarity(query, matrix[i]));
 		}
-		ranking = ranking.OrderByDescending(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+		ranking = ranking.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 		// Debug.TravelDict(ranking);
 
 		List<SearchItem> searchItems = new List<SearchItem>();
 		foreach(var kvp in ranking)
 		{
-			Document document = kvp.Value;
+			Document document = kvp.Key;
 			searchItems.Add(new SearchItem(
 				document.Name, document.Snippet,
-				document.FilePath, kvp.Key));
+				document.FilePath, kvp.Value));
 		}
 
 		TimeSpan time = TimeSpan.FromMilliseconds(
@@ -54,21 +55,14 @@ public static class Moogle
 			query = temp;
 		}
 
-		
-
 		double dotProduct = 0;
 		for(int i = 0; i < query.Length; i++)
 		{
-			// if(query[i] != 0 && document[i] != 0)
-			// {
-				dotProduct += query[i]*document[i];
-			// }
+			dotProduct += query[i]*document[i];
 		}
-		Console.WriteLine(dotProduct);
+// 		Console.WriteLine(query.Norm*document.Norm);
 
 		return (dotProduct)/(1e-10+query.Norm*document.Norm);
-
-		return 0;
 	}
 
 	public static void Inform(string msg)

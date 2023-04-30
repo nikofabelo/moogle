@@ -44,7 +44,5 @@ public class Vector
 
 	public double this[int i] { get { return this.items[i]; } }
 
-// 	public double[] AsDouble() { return this.items; } // XXX
-
 	public int Length { get { return this.items.Length; } }
 }

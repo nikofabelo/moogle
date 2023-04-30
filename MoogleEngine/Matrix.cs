@@ -14,16 +14,4 @@ public class Matrix
 	}
 
 	public Vector this[int i] { get { return this.vectors[i]; } }
-
-// 	public double[][] AsDoubles() // XXX
-// 	{
-// 		double[][] vectors = new double[Length][];
-// 		for(int i = 0; i < Length; i++)
-// 		{
-// 			vectors[i] = this.vectors[i].AsDouble();
-// 		}
-// 		return vectors;
-// 	}
-
-// 	public int Length { get { return this.vectors.Length; } }
 }

@@ -82,7 +82,7 @@ public class Document
 				throw new IOException("Document not processed: "+path);
 			}
 			this.name = Path.GetFileNameWithoutExtension(path);
-			this.filePath = "/Content/"+this.name+".txt"; // FIXME Content/ == /Content/
+			this.filePath = "/Content/"+this.name+".txt";
 		}
 		else
 		{
