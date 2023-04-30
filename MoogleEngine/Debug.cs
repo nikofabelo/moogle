@@ -36,4 +36,18 @@ public static class Debug
 		foreach(string key in d.Keys)
 			Console.WriteLine("{0}:\n\t{1}", key, d[key]);
 	}
+
+	public static void TravelDict(Dictionary<double, Document> d)
+	{
+		foreach(double key in d.Keys)
+			Console.WriteLine("{0}:\n\t{1}", key, d[key].Name);
+	}
+
+	public static void TravelVector(Vector v)
+	{
+		for(int i = 0; i < v.Length; i++)
+		{
+			Console.WriteLine(v[i]);
+		}
+	}
 }

@@ -2,7 +2,7 @@ namespace MoogleEngine;
 
 public class Vector
 {
-// 	private double norm = 0;
+	private double norm = 0;
 	private double[] items;
 
 	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
@@ -13,30 +13,22 @@ public class Vector
 			KeyValuePair<string, double> pair = tf.ElementAt(i);
 			this.items[i] = pair.Value*idf[pair.Key];
 		}
+		CalculateNorm();
 		// Normalize();
 	}
 
-// 	private void CalculateNorm() // FIXME
-// 	{
-// 		for(int i = 0; i < Length; i++)
-// 		{
-// 			double item = this.items[i];
-// 			// Console.WriteLine("item: {0}", item);
-// 			if(item != 0)
-// 			{
-// 				this.norm += Math.Pow(item, 2);
-// 				// Console.WriteLine("\tNorm: {0}", this.norm);
-// 				// if(double.IsNaN(Norm)) break;
-// 			}
-// 			else if (double.IsNaN(item))
-// 			{
-// 				Console.WriteLine("NaN value found at index {0}", i);
-// 			}
-// 		}
-// 		// Console.WriteLine(this.norm);
-// 		// this.norm = Math.Sqrt(this.norm);
-// 		Console.WriteLine(Norm);
-// 	}
+	private void CalculateNorm()
+	{
+		for(int i = 0; i < this.items.Length; i++)
+		{
+			double item = this.items[i];
+			if(item != 0)
+			{
+				this.norm += item * item;
+			}
+		}
+		this.norm = Math.Sqrt(this.norm);
+	}
 
 // 	private void Normalize()
 // 	{
@@ -48,9 +40,11 @@ public class Vector
 // 		}
 // 	}
 
-// 	public double Norm { get { return this.norm; } }
+	public double Norm { get { return this.norm; } }
 
-// 	public double this[int i] { get { return this.items[i]; } }
+	public double this[int i] { get { return this.items[i]; } }
 
 // 	public double[] AsDouble() { return this.items; } // XXX
+
+	public int Length { get { return this.items.Length; } }
 }

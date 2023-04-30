@@ -26,9 +26,9 @@ public class Document
 
 	public string Name { get { return this.name; } }
 
-// 	public string Snippet { get { return this.snippet; } }
+	public string Snippet { get { return this.snippet; } }
 
-// 	public string FilePath { get { return this.filePath; } }
+	public string FilePath { get { return this.filePath; } }
 
 	public string[] Words { get { return this.words; } }
 
