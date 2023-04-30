@@ -48,6 +48,8 @@ public static class Moogle
 
 	public static double ComputeCosineSimilarity(Vector query, Vector document)
 	{
+		// cos(qV, dV) = sum(TFIDF_Term_Query * TF_IDF_Term_Document)/(Norm_Query*Norm_Document)
+
 		if(query.Length > document.Length)
 		{
 			Vector temp = document;
