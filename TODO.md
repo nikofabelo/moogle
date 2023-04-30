@@ -1,4 +1,4 @@
-# TODO
+<!-- # TODO -->
 # Check DOCs, Evaluation.
 # 1. Collect and preprocess your corpus: Collect the documents that you want to use for your search engine and preprocess them by removing stop words, stemming/lemmatizing the remaining words, and converting them to lowercase.
 # 2. Build the document-term matrix: Build a document-term matrix where each row represents a document and each column represents a term in the corpus vocabulary. The values in the matrix can be the raw term frequency or the TF-IDF weight of the corresponding term in the document. 
@@ -10,7 +10,10 @@
 # 8. Present the results: Present the search results to the user in a user-friendly way, such as by displaying the document titles and snippets or by providing links to the full documents.
 
 # III	Normalizar vectores de documentos dividiendo por tamagno Euclideano.
-
+# FIXME Requerimiento crear vectores de igual tamaño, Implemented Math.
+# TODO Non-static Moogle.
+# Refactor.
+ = new Document[]{};
 - No recrea corpus en Query.
 - Recrea Matrix en cambios.
 - Query not maching score of document is 0.

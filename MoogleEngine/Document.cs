@@ -19,27 +19,27 @@ public class Document
 		CalculateTF();
 	}
 
-	public double GetTF(string word)
+	public bool Contains(string word)
 	{
-		return this.tf.TryGetValue(word, out double value) ? value : 0;
+		return this.tf.TryGetValue(word, out _);
 	}
 
 	public string Name { get { return this.name; } }
 
-	public string Snippet { get { return this.snippet; } }
+// 	public string Snippet { get { return this.snippet; } }
 
-	public string FilePath { get { return this.filePath; } }
+// 	public string FilePath { get { return this.filePath; } }
 
 	public string[] Words { get { return this.words; } }
 
 	public Vector GetVector(Dictionary<string, double> idf)
 	{
-		return new Vector(tf, idf);
+		return new Vector(this.tf, idf);
 	}
 
 	private void CalculateTF()
 	{
-		foreach(string word in Words)
+		foreach(string word in this.words)
 		{
 			if(!this.tf.ContainsKey(word))
 			{
@@ -50,8 +50,10 @@ public class Document
 				this.tf[word]++;
 			}
 		}
-		foreach(string word in Words)
-			this.tf[word] /= Words.Length;
+		foreach(string word in this.words)
+		{
+			this.tf[word] /= this.words.Length;
+		}
 	}
 
 	private void ReadDocument(string path)
@@ -64,20 +66,23 @@ public class Document
 					.SelectMany(line => r.Split(line.ToLower()))
 					.Where(w => !string.IsNullOrWhiteSpace(w))
 					.ToArray();
-				
+
 				List<string> lines = new List<string>();
 				using(StreamReader sr = new StreamReader(path, Encoding.UTF8))
-					while(lines.Count < 18 && sr.Peek() >= 0) // FIXME 18 ?
+				{
+					while(lines.Count < 18 && sr.Peek() > -1) // FIXME 18 ?
+					{
 						lines.Add(sr.ReadLine()!);
+					}
+				}
 				this.snippet = string.Join(" ", lines);
 			}
 			catch
 			{
 				throw new IOException("Document not processed: "+path);
 			}
-			this.name = Path.GetFileName(path);
-			this.name = this.name.Substring(0, this.name.Length-4);
-			this.filePath = "/Content/"+Name+".txt";
+			this.name = Path.GetFileNameWithoutExtension(path);
+			this.filePath = "/Content/"+this.name+".txt"; // FIXME Content/ == /Content/
 		}
 		else
 		{

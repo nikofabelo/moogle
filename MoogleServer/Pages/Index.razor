@@ -101,17 +101,17 @@
 	</div>
 	@if (!string.IsNullOrEmpty(result.Suggestion)) {
 		<div class="suggestion" style="color: #fff">
-			<p style="padding: 7px;">Did you mean: <b><i>
-				<a href="#">@result.Suggestion</a>
+			<p style="padding: 7px;">Quisistes decir: <b><i>
+				<a href="#" style="text-decoration: none">@result.Suggestion</a>
 			</i></b></p>
 		</div>
 	}
-
 	<ul class="results">
 	@foreach (var item in result.Items()) {
 		<li>
 			<div class="item" style="align: center; justify-content: center;color: #fff">
-				<a style="padding: 7px; color: green; text-shadow: none" href=@item.FilePath target="_blank">@item.Title</a>
+				<a style="padding: 7px; color: green; text-shadow: none" 
+					href=@item.FilePath target="_blank">@item.Title</a>
 				<p style="padding: 7px; text-shadow: none; font-weight: 1">@item.Snippet</p>
 			</div>
 		</li>

@@ -6,7 +6,7 @@ public class SearchResult
 
 	public SearchResult(SearchItem[] items, string suggestion="")
 	{
-		if (items == null) {
+		if(items == null) {
 			throw new ArgumentNullException("items");
 		}
 
@@ -14,9 +14,7 @@ public class SearchResult
 		this.Suggestion = suggestion;
 	}
 
-	public SearchResult() : this(new SearchItem[0]) {
-
-	}
+	public SearchResult() : this(new SearchItem[0]) {}
 
 	public string Suggestion { get; private set; }
 
