@@ -2,6 +2,23 @@ namespace MoogleEngine;
 
 public static class Debug
 {
+	public static bool HasWrong(Dictionary<string, double> d)
+	{
+		foreach(var v in d.Values)
+		{
+			if(IsWrong(v))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static bool IsWrong(double d)
+	{
+		return (double.IsInfinity(d) || double.IsNaN(d)) ? true : false;
+	}
+
 	public static void TravelArray(double[] a)
 	{
 		foreach(double d in a)

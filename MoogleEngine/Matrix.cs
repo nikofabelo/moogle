@@ -13,7 +13,7 @@ public class Matrix
 		}
 	}
 
-// 	public Vector this[int i] { get { return this.vectors[i]; } }
+	public Vector this[int i] { get { return this.vectors[i]; } }
 
 // 	public double[][] AsDoubles() // XXX
 // 	{
