@@ -51,8 +51,10 @@ public static class Moogle
 		{
 			Vector temp = document;
 			document = query;
-			query = document;
+			query = temp;
 		}
+
+		
 
 		double dotProduct = 0;
 		for(int i = 0; i < query.Length; i++)
@@ -64,7 +66,9 @@ public static class Moogle
 		}
 		Console.WriteLine(dotProduct);
 
-		return (dotProduct+1)/(1e-10+query.Norm*document.Norm);
+		return (dotProduct)/(1e-10+query.Norm*document.Norm);
+
+		return 0;
 	}
 
 	public static void Inform(string msg)
