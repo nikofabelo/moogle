@@ -7,13 +7,6 @@ public class Query
 	public Query(string query, Dictionary<string, double> idf)
 	{
 		Document document = new Document("q_"+query);
-		foreach(string word in document.Words)
-		{
-			if(!idf.ContainsKey(word))
-			{
-				idf[word] = 0;
-			}
-		}
 		this.queryVector = document.GetVector(idf);
 	}
 

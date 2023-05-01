@@ -18,15 +18,13 @@ public static class Moogle
 		Inform("Computing Cosine Similarity...");
 		Dictionary<Document, double> ranking = new Dictionary<Document, double>();
 		Document[] documents = corpus.Documents;
-		for(int i = 0; i < corpus.Length; i++)
+		for(int i = 0; i < documents.Length; i++)
 		{
-			ranking.Add(documents[i],
-				ComputeCosineSimilarity(query, matrix[i])+i); // FIXME -i
-			Console.WriteLine("{0}\n\t{1}", corpus.Documents[i].Name,
-				ComputeCosineSimilarity(query, matrix[i]));
+			double cosine = ComputeCosineSimilarity(query, matrix[i]);
+			if(cosine > 0) ranking.Add(documents[i], cosine);
 		}
-		ranking = ranking.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-		// Debug.TravelDict(ranking);
+		ranking = ranking.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+		Debug.TravelDict(ranking);
 
 		List<SearchItem> searchItems = new List<SearchItem>();
 		foreach(var kvp in ranking)
@@ -50,21 +48,14 @@ public static class Moogle
 	{
 		// cos(qV, dV) = sum(TFIDF_Term_Query * TF_IDF_Term_Document)/(Norm_Query*Norm_Document)
 
-		if(query.Length > document.Length)
-		{
-			Vector temp = document;
-			document = query;
-			query = temp;
-		}
-
 		double dotProduct = 0;
 		for(int i = 0; i < query.Length; i++)
 		{
 			dotProduct += query[i]*document[i];
 		}
-// 		Console.WriteLine(query.Norm*document.Norm);
+		Console.WriteLine(dotProduct/(query.Norm*document.Norm));
 
-		return (dotProduct)/(1e-10+query.Norm*document.Norm);
+		return dotProduct/(query.Norm*document.Norm);
 	}
 
 	public static void Inform(string msg)
