@@ -1,30 +1,45 @@
 ﻿namespace MoogleEngine;
 
-public static class Moogle
+public class Moogle
 {
-	public static SearchResult Query(string queryStr)
+	private bool isRunning = false;
+	private Corpus? corpus = null;
+	private Matrix? matrix = null;
+
+	public SearchResult Query(string queryStr)
 	{
+		if(!this.isRunning)
+		{
+			this.isRunning = true;
+			int initTime = Environment.TickCount;
+
+			Inform("Loading Corpus...");
+			this.corpus = new Corpus("../Content");
+
+			Inform("Generating Matrix...");
+			this.matrix = this.corpus.Matrix;
+
+			TimeSpan time = TimeSpan.FromMilliseconds(
+				Environment.TickCount-initTime);
+			Inform("All Done! 👍 "+string.Format(
+				"{0:D2} minutes, {1:D2} seconds",
+				time.Minutes, time.Seconds));
+		}
+
 		int callTime = Environment.TickCount;
 
-		Inform("Loading Corpus...");
-		Corpus corpus = new Corpus("../Content");
-
-		Inform("Generating Matrix...");
-		Matrix matrix = corpus.Matrix;
-
 		Inform("Vectorizing Query: \""+queryStr+"\"");
-		Vector query = new Query(queryStr, corpus).Vector;
+		Vector query = new Query(queryStr, this.corpus!).Vector;
 
 		Inform("Computing Cosine Similarity...");
 		Dictionary<Document, double> ranking = new Dictionary<Document, double>();
-		Document[] documents = corpus.Documents;
+		Document[] documents = this.corpus!.Documents;
 		for(int i = 0; i < documents.Length; i++)
 		{
-			double cosine = ComputeCosineSimilarity(query, matrix[i]);
+			double cosine = ComputeCosineSimilarity(query, this.matrix![i]);
 			if(cosine > 0) ranking.Add(documents[i], cosine);
 		}
 		ranking = ranking.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-		Debug.TravelDict(ranking);
 
 		List<SearchItem> searchItems = new List<SearchItem>();
 		foreach(var kvp in ranking)
@@ -35,16 +50,15 @@ public static class Moogle
 				document.FilePath, kvp.Value));
 		}
 
-		TimeSpan time = TimeSpan.FromMilliseconds(
+		TimeSpan queryTime = TimeSpan.FromMilliseconds(
 			Environment.TickCount-callTime);
-		Inform("All Done! 👍 "+string.Format(
+		Inform("Query Done! 👍 "+string.Format(
 			"{0:D2} minutes, {1:D2} seconds",
-			time.Minutes, time.Seconds));
-
+			queryTime.Minutes, queryTime.Seconds));
 		return new SearchResult(searchItems.ToArray(), queryStr);
 	}
 
-	public static double ComputeCosineSimilarity(Vector query, Vector document)
+	public double ComputeCosineSimilarity(Vector query, Vector document)
 	{
 		double dotProduct = 0;
 		for(int i = 0; i < query.Length; i++)

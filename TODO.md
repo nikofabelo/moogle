@@ -4,8 +4,7 @@
 > Check Algorithm.
 > Comment Code.
 > Implement Math in a separate class, and in it's full glory.
-> Make Moogle non-static.
-> Optimize.
+> Refactor.
 > Show Suggestion.
 
 ## Class B

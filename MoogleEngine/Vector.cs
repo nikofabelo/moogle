@@ -5,14 +5,15 @@ public class Vector
 	private double norm = 0;
 	private double[] items;
 
-	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
+	public Vector(Dictionary<string, double> tf, Corpus corpus)
 	{
-		this.items = new double[idf.Count];
-		for(int i = 0; i < this.items.Length; i++)
+		this.items = new double[corpus.DTF.Count];
+		int i = 0;
+		foreach(string key in corpus.DTF.Keys)
 		{
-			KeyValuePair<string, double> pair = idf.ElementAt(i);
 			this.items[i] = (tf.TryGetValue(
-				pair.Key, out double value) ? value : 0)*pair.Value;
+				key, out double value) ? value : 0)*corpus.IDF[key];
+			i++;
 		}
 		CalculateNorm();
 	}

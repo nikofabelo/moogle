@@ -145,10 +145,16 @@
 </div>
 
 @code {
-	private string query = "";
+	private readonly Moogle moogleEngine;
 	private SearchResult result = new SearchResult();
+	private string query = "";
+
+	public Index()
+	{
+		this.moogleEngine = new Moogle();
+	}
 
 	private void RunQuery() {
-		result = Moogle.Query(query);
+		result = moogleEngine.Query(query);
 	}
 }

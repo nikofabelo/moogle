@@ -38,7 +38,7 @@ public class Document
 
 	public Vector GetVector()
 	{
-		return new Vector(this.tf, this.corpus.IDF);
+		return new Vector(this.tf, this.corpus);
 	}
 
 	private void CalculateTF()
