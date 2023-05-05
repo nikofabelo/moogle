@@ -4,10 +4,10 @@ public class Query
 {
 	private Vector queryVector;
 
-	public Query(string query, Dictionary<string, double> idf)
+	public Query(string query, Corpus corpus)
 	{
-		Document document = new Document("q_"+query);
-		this.queryVector = document.GetVector(idf);
+		Document document = new Document("q_"+query, corpus);
+		this.queryVector = document.GetVector();
 	}
 
 	public Vector Vector { get { return this.queryVector; } }

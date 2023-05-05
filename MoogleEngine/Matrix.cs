@@ -4,12 +4,12 @@ public class Matrix
 {
 	private Vector[] vectors;
 
-	public Matrix(Document[] documents, Dictionary<string, double> idf)
+	public Matrix(Document[] documents)
 	{
 		this.vectors = new Vector[documents.Length];
 		for(int i = 0; i < this.vectors.Length; i++)
 		{
-			this.vectors[i] = documents[i].GetVector(idf);
+			this.vectors[i] = documents[i].GetVector();
 		}
 	}
 

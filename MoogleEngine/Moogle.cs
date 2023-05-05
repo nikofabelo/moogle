@@ -13,7 +13,7 @@ public static class Moogle
 		Matrix matrix = corpus.Matrix;
 
 		Inform("Vectorizing Query: \""+queryStr+"\"");
-		Vector query = new Query(queryStr, corpus.IDF).Vector;
+		Vector query = new Query(queryStr, corpus).Vector;
 
 		Inform("Computing Cosine Similarity...");
 		Dictionary<Document, double> ranking = new Dictionary<Document, double>();
@@ -23,7 +23,7 @@ public static class Moogle
 			double cosine = ComputeCosineSimilarity(query, matrix[i]);
 			if(cosine > 0) ranking.Add(documents[i], cosine);
 		}
-		ranking = ranking.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+		ranking = ranking.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 		Debug.TravelDict(ranking);
 
 		List<SearchItem> searchItems = new List<SearchItem>();
@@ -46,15 +46,9 @@ public static class Moogle
 
 	public static double ComputeCosineSimilarity(Vector query, Vector document)
 	{
-		// cos(qV, dV) = sum(TFIDF_Term_Query * TF_IDF_Term_Document)/(Norm_Query*Norm_Document)
-
 		double dotProduct = 0;
 		for(int i = 0; i < query.Length; i++)
-		{
 			dotProduct += query[i]*document[i];
-		}
-		Console.WriteLine(dotProduct/(query.Norm*document.Norm));
-
 		return dotProduct/(query.Norm*document.Norm);
 	}
 

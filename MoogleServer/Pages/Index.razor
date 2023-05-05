@@ -3,6 +3,26 @@
 <PageTitle>Moogle!</PageTitle>
 
 <style>
+	@@-webkit-keyframes fade-in {
+		0% {
+			opacity: 0;
+			transform: translateY(-50px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@@-webkit-keyframes slide-in {
+		0% {
+			transform: translateY(100%);
+			opacity: 0;
+		}
+		100% {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
 	body {
 		background-image: url('img/main.jpg');
 		background-size: cover;
@@ -36,6 +56,21 @@
 	input::placeholder {
 		color: lightgray;
 	}
+	.btn:focus {
+		box-shadow: none;
+	}
+	.content {
+		position: relative;
+		height: 100vh;
+	}
+	.item {
+		background-color: rgba(0, 0, 0, 0.4);
+		border-radius: 20px;
+		padding: 10px;
+		margin-top: 20px;
+		text-align: left;
+		animation: slide-in 1s ease-in-out;
+	}
 	.search-box {
 		display: inline-flex;
 		align-items: center;
@@ -59,27 +94,12 @@
 		background-color: transparent;
 		border: none;
 	}
-	.btn:focus {
-		box-shadow: none;
-	}
 	.search-box button:hover {
 		background: none;
 		cursor: pointer;
 	}
 	.search-box input::placeholder {
 		color: lightgray;
-	}
-	.content {
-		position: relative;
-		height: 100vh;
-	}
-	.item {
-		background-color: rgba(0, 0, 0, 0.4);
-		border-radius: 20px;
-		padding: 10px;
-		margin-top: 20px;
-		text-align: left;
-		animation: slide-in 1s ease-in-out;
 	}
 	.suggestion {
 		background-color: rgba(0, 0, 0, 0.35);
@@ -90,26 +110,6 @@
 		font-weight: normal;
 		text-shadow: none;
 		animation: slide-in 1s ease-in-out;
-	}
-	@@-webkit-keyframes fade-in {
-		0% {
-			opacity: 0;
-			transform: translateY(-50px);
-		}
-		100% {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-	@@-webkit-keyframes slide-in {
-		0% {
-			transform: translateY(100%);
-			opacity: 0;
-		}
-		100% {
-			transform: translateY(0);
-			opacity: 1;
-		}
 	}
 </style>
 
@@ -123,7 +123,7 @@
 			</svg>
 		</button>
 	</div>
-	@if (!string.IsNullOrEmpty(result.Suggestion)) {
+	@if (!string.IsNullOrEmpty(result.Suggestion) && result.Count<5) {
 		<div class="suggestion" style="color: #fff">
 			<p style="padding: 7px;">Quisistes decir: <b><i>
 				<a href="#" style="text-decoration: none">@result.Suggestion</a>

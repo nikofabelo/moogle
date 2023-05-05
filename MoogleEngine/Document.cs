@@ -5,6 +5,7 @@ namespace MoogleEngine;
 
 public class Document
 {
+	private Corpus corpus;
 	private Dictionary<string, double> tf = new Dictionary<string, double>();
 	private string name = "";
 	private string snippet = "";
@@ -13,8 +14,10 @@ public class Document
 
 	static readonly Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
 
-	public Document(string path)
+	public Document(string path, Corpus corpus)
 	{
+		this.corpus = corpus;
+
 		ReadDocument(path);
 		CalculateTF();
 	}
@@ -31,10 +34,11 @@ public class Document
 	public string FilePath { get { return this.filePath; } }
 
 	public string[] Words { get { return this.words; } }
+	
 
-	public Vector GetVector(Dictionary<string, double> idf)
+	public Vector GetVector()
 	{
-		return new Vector(this.tf, idf);
+		return new Vector(this.tf, this.corpus.IDF);
 	}
 
 	private void CalculateTF()
@@ -44,13 +48,21 @@ public class Document
 			if(!this.tf.ContainsKey(word))
 			{
 				this.tf[word] = 1;
+				if(!this.corpus.DTF.ContainsKey(word))
+				{
+					this.corpus.DTF[word] = 1;
+				}
+				else
+				{
+					this.corpus.DTF[word]++;
+				}
 			}
 			else
 			{
 				this.tf[word]++;
 			}
 		}
-		foreach(string word in this.words)
+		foreach(string word in this.tf.Keys)
 		{
 			this.tf[word] /= this.words.Length;
 		}

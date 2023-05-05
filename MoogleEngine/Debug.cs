@@ -26,6 +26,12 @@ public static class Debug
 			Console.WriteLine("{0}:\n\t{1}", key, d[key]);
 	}
 
+	public static void TravelDict(Dictionary<string, int> d)
+	{
+		foreach(string key in d.Keys)
+			Console.WriteLine("{0}:\n\t{1}", key, d[key]);
+	}
+
 	public static void TravelVector(Vector v)
 	{
 		for(int i = 0; i < v.Length; i++)
