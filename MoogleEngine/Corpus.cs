@@ -30,16 +30,26 @@ public class Corpus
 
 	public Matrix Matrix { get { return new Matrix(this.documents); } }
 
+	/**
+		Calcula el valor de IDF para cada palabra del
+		diccionario dtf que funciona como banco de palabras
+	*/
 	private void CalculateIDF()
 	{
 		foreach(string word in this.dtf.Keys)
 		{
+			// IDF = log(cantidad_documentos / documentos_aparece_palabra)
 			this.idf[word] = Math.Log(this.documents.Length / this.dtf[word]);
 		}
 	}
 
 	private void ReadDocuments(string path)
 	{
+		/**
+			Obtiene los nombres de archivos con extension .txt
+			del directorio que contiene el Corpus
+			Crea un arreglo de documentos y agnade cada documento
+		*/
 		string[] directoryFiles = Directory.GetFiles(
 			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
 		this.documents = new Document[directoryFiles.Length];

@@ -2,12 +2,19 @@
 
 public class Moogle
 {
+	// Define un flag que permite saber si ya se ha iniciado el motor de busqueda
 	private bool isRunning = false;
 	private Corpus? corpus = null;
 	private Matrix? matrix = null;
 
 	public SearchResult Query(string queryStr)
 	{
+		/**
+			En caso de que no se haya iniciado el motor se creara
+			el Corpus leyendo todos los documentos en ../Content
+			Seguidamente se genera la matriz de documentos
+			Esto solo ocurre una vez ya que isRunning se vuelve true
+		*/
 		if(!this.isRunning)
 		{
 			this.isRunning = true;
@@ -28,19 +35,29 @@ public class Moogle
 
 		int callTime = Environment.TickCount;
 
+		// En todo caso se crea un Vector del texto del Query
 		Inform("Vectorizing Query: \""+queryStr+"\"");
-		Vector query = new Query(queryStr, this.corpus!).Vector;
+		Query query = new Query(queryStr, this.corpus!);
+		Vector queryVector = query.Vector;
 
+		/**
+			Se calcula la similitud cosenica entre el Vector
+			del Query y cada documento, creando asi un valor
+			de ranking para cada documento que luego se ordena
+		*/
 		Inform("Computing Cosine Similarity...");
 		Dictionary<Document, double> ranking = new Dictionary<Document, double>();
 		Document[] documents = this.corpus!.Documents;
 		for(int i = 0; i < documents.Length; i++)
 		{
-			double cosine = ComputeCosineSimilarity(query, this.matrix![i]);
+			double cosine = ComputeCosineSimilarity(queryVector, this.matrix![i]);
+			// Si los vectores no son ortogonales los agnade a la lista de resultados
 			if(cosine > 0) ranking.Add(documents[i], cosine);
 		}
+		// Ordena de manera descendiente los documentos por su valor de ranking
 		ranking = ranking.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
+		// Incluye en el SearchResult los SearchItem de la busqueda
 		List<SearchItem> searchItems = new List<SearchItem>();
 		foreach(var kvp in ranking)
 		{
@@ -50,14 +67,26 @@ public class Moogle
 				document.FilePath, kvp.Value));
 		}
 
+		// TODO
+		List<string> suggestionWords = new List<string>();
+		foreach(string word in query.Document.Words)
+		{
+			suggestionWords.Add("test");
+		}
+		string suggestion = (suggestionWords.Count < 0) ? queryStr : string.Join(" ", suggestionWords);
+
 		TimeSpan queryTime = TimeSpan.FromMilliseconds(
 			Environment.TickCount-callTime);
 		Inform("Query Done! 👍 "+string.Format(
 			"{0:D2} minutes, {1:D2} seconds",
 			queryTime.Minutes, queryTime.Seconds));
-		return new SearchResult(searchItems.ToArray(), queryStr);
+		return new SearchResult(searchItems.ToArray(), suggestion);
 	}
 
+	/**
+		Calcula la similitud cosenica entre dos vectores donde
+		cos = (vector1 * vector2)/(magnitud_vector1 * magnitud_vector2)
+	*/
 	public double ComputeCosineSimilarity(Vector query, Vector document)
 	{
 		double dotProduct = 0;

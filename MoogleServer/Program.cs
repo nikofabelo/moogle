@@ -15,6 +15,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+/**
+    Define un nuevo modo de acceso a archivos estaticos
+    mediante la ruta /Content, esto sirve para acceder a
+    los documentos desde los resultados de la busqueda
+*/
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(

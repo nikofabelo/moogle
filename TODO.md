@@ -2,7 +2,6 @@
 ## Class A
 > Check docs folder.
 > Check Algorithm.
-> Comment Code.
 > Implement Math in a separate class, and in it's full glory.
 > Refactor.
 > Show Suggestion.

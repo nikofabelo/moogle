@@ -1,5 +1,6 @@
 namespace MoogleEngine;
 
+// Crea una matriz de objetos Vector de los documentos
 public class Matrix
 {
 	private Vector[] vectors;

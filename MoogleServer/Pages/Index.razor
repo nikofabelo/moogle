@@ -24,62 +24,47 @@
 		}
 	}
 	body {
-		background-image: url('img/main.jpg');
-		background-size: cover;
-		background-position: center;
 		background-attachment: fixed;
+		background-image: url('img/main.jpg');
+		background-position: center;
+		background-size: cover;
 		display: flex;
 		flex-direction: column;
 		font-weight: bold;
 		height: 100vh;
 		justify-content: center;
-		text-shadow: 2px 2px #404040;
 		padding: 34% 0;
+		text-shadow: 2px 2px #404040;
 	}
 	h1 {
+		animation: fade-in 1s ease-in-out;
 		color: yellow;
 		font-size: 100px;
 		font-weight: inherit;
 		text-shadow: inherit;
-		margin: 0;
-		animation: fade-in 1s ease-in-out;
-	}
-	input {
-		background-color: rgba(0, 0, 0, 0.3);
-		border: none;
-		border-radius: 20px;
-		color: white;
-		font-size: 1.2em;
-		line-height: 2em;
-		width: 50%;
-	}
-	input::placeholder {
-		color: lightgray;
 	}
 	.btn:focus {
 		box-shadow: none;
 	}
 	.content {
-		position: relative;
 		height: 100vh;
+		position: relative;
 	}
 	.item {
+		animation: slide-in 1s ease-in-out;
 		background-color: rgba(0, 0, 0, 0.4);
 		border-radius: 20px;
-		padding: 10px;
+		color: #fff;
 		margin-top: 20px;
+		padding: 10px;
 		text-align: left;
-		animation: slide-in 1s ease-in-out;
 	}
 	.search-box {
-		display: inline-flex;
-		align-items: center;
+		animation: fade-in 1s ease-in-out;
 		background-color: rgba(0, 0, 0, 0.3);
 		border-radius: 50px;
-		overflow: hidden;
+		display: inline-flex;
 		width: 50%;
-		margin: 0 auto;
-		animation: fade-in 1s ease-in-out;
 	}
 	.search-box input {
 		background-color: transparent;
@@ -90,69 +75,57 @@
 		padding: 5px 25px;
 		width: 100%;
 	}
-	.search-box button {
-		background-color: transparent;
-		border: none;
-	}
-	.search-box button:hover {
-		background: none;
-		cursor: pointer;
-	}
 	.search-box input::placeholder {
 		color: lightgray;
 	}
 	.suggestion {
+		animation: slide-in 1s ease-in-out;
 		background-color: rgba(0, 0, 0, 0.35);
 		border-radius: 20px;
-		width: 75%;
-		margin: 0 auto;
+		color: #fff;
 		font-size: 1.2em;
 		font-weight: normal;
+		margin: 0 auto;
 		text-shadow: none;
-		animation: slide-in 1s ease-in-out;
+		width: 75%;
 	}
 </style>
 
 <div class="content">
 	<h1>🔍 Moogle!</h1>
 	<div class="search-box p-1 my-4">
-		<input @bind="query" placeholder="Introduzca su búsqueda..." onfocus="this.style.outline='none';">
-		<button type="default" class="btn" @onclick="RunQuery">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" viewBox="0 0 24 24" width="24" height="24">
+		<input @bind="query" onfocus="this.style.outline='none';" placeholder="Introduzca su búsqueda...">
+		<button @onclick="RunQuery" class="btn">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" height="24" width="24" viewBox="0 0 24 24">
 				<path d="M9.5 16a6.5 6.5 0 1 1 4.798-2.13l4.45 4.45a1 1 0 0 1-1.414 1.414l-4.45-4.45A6.445 6.445 0 0 1 9.5 16zm0-11a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
 			</svg>
 		</button>
 	</div>
-	@if (!string.IsNullOrEmpty(result.Suggestion) && result.Count<5) {
-		<div class="suggestion" style="color: #fff">
+	@if(!string.IsNullOrEmpty(result.Suggestion) && result.Count<5) {
+		<div class="suggestion">
 			<p style="padding: 7px;">Quisistes decir: <b><i>
-				<a href="#" style="text-decoration: none">@result.Suggestion</a>
+				<a href="#" style="text-decoration: none;">@result.Suggestion</a>
 			</i></b></p>
 		</div>
 	}
 	<ul class="results">
-	@foreach (var item in result.Items()) {
-		<li>
-			<div class="item" style="align: center; justify-content: center;color: #fff">
-				<a style="padding: 7px; color: green; text-shadow: none" 
-					href=@item.FilePath target="_blank">@item.Title</a>
-				<p style="padding: 7px; text-shadow: none; font-weight: 1">@item.Snippet</p>
-			</div>
-		</li>
-	}
-	<li></li>
+		@foreach(var item in result.Items()) {
+			<li>
+				<div class="item">
+					<a href=@item.FilePath target="_blank"
+						style="color: green; padding: 7px; text-shadow: none;">@item.Title</a>
+					<p style="font-weight: 1; padding: 7px; text-shadow: none;">@item.Snippet</p>
+				</div>
+			</li>
+		}
+		<li></li>
 	</ul>
 </div>
 
 @code {
-	private readonly Moogle moogleEngine;
+	private Moogle moogleEngine = new Moogle();
 	private SearchResult result = new SearchResult();
 	private string query = "";
-
-	public Index()
-	{
-		this.moogleEngine = new Moogle();
-	}
 
 	private void RunQuery() {
 		result = moogleEngine.Query(query);
