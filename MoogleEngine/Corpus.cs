@@ -5,7 +5,7 @@ public class Corpus
 {
 	private Dictionary<string, double> dtf = new Dictionary<string, double>();
 	private Dictionary<string, double> idf = new Dictionary<string, double>();
-	private Document[] documents = new Document[]{};
+	private Document[] documents = new Document[0];
 
 	public Corpus(string path)
 	{
@@ -26,13 +26,13 @@ public class Corpus
 		}
 	}
 
+	/**
+		Obtiene los nombres de archivos con extension .txt
+		en el directorio que contiene el Corpus, posteriormente
+		crea un arreglo de documentos y agnade cada documento
+	*/
 	private void ReadDocuments(string path)
 	{
-		/**
-			Obtiene los nombres de archivos con extension .txt
-			del directorio que contiene el Corpus
-			Crea un arreglo de documentos y agnade cada documento
-		*/
 		string[] directoryFiles = Directory.GetFiles(
 			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
 		this.documents = new Document[directoryFiles.Length];
@@ -43,19 +43,13 @@ public class Corpus
 		}
 	}
 
-	public Dictionary<string, double> IDF { get { return this.idf; } }
-
 	public Dictionary<string, double> DTF
 	{
-		get
-		{
-			return this.dtf;
-		}
-		set
-		{
-			this.dtf = value;
-		}
+		get { return this.dtf; }
+		set { this.dtf = value; }
 	}
+
+	public Dictionary<string, double> IDF { get { return this.idf; } }
 
 	public Document[] Documents { get { return this.documents; } }
 
