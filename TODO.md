@@ -4,6 +4,7 @@
 > Check Algorithm.
 > Implement Math in a separate class, and in it's full glory.
 > Refactor.
+> Comment
 > Show Suggestion.
 
 ## Class B
@@ -13,7 +14,7 @@
 </svg> -->
 > Make Enter be click.
 > Recreates Matrix on Content change.
-> Refactor source code.
+> Refactor project.
 
 ## Algorithm
 > 1. Collect and preprocess your corpus: Collect the documents that you want to use for your search engine and preprocess them by removing stop words, stemming/lemmatizing the remaining words, and converting them to lowercase.
@@ -48,15 +49,8 @@
 - Si las palabras exactas no aparecen, pero aparecen palabras derivadas de la misma raíz, también queremos devolver esos documentos (por ejemplo, si no está `"ordenación"` pero estar `"ordenados"`, ese documento puede devolverse pero con un `score` menor).
 - Si aparecen palabras relacionadas aunque no tengan la misma raíz (por ejemplo si la búsqueda es `"computadora"` y el documento tiene `"ordenador"`), también queremos devolver esos documentos pero con menor `score` que si apareciera la palabra exacta o una de la misma raíz. -->
 
-- Query not maching score of document is 0.
 - Buscar tambien palabras inexactas.
 - Menor Score cuando existen menos palabras exactas o coincidencias.
-- El orden de las palabras del Query no importa pero si las apariciones.
-- Si aparece misma cantidad de palabras pero uno tiene palabras mas raras, doc tiene score mas alto.
-- Si tiene mas elementos de la busqueda luego tiene mas score a no ser que sean comunes los elementos.
-- Documentos de score 0.
-- Russian and Chinese, else alphabets.
-- Comentarios.
 - Simbolo ! no debe aparecer la palabra.
 - Simbolo ^ debe aparecer en cualquier documento.
 - Simbolo ~ debe hacer que las palabras aparezcan por defecto unidas mientras mas alto mas score.

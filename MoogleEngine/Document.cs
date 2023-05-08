@@ -3,10 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace MoogleEngine;
 
-
+// Define un mejor acceso a las propiedades de documentos
 public class Document
 {
-	private bool isQuery = false;
 	private Corpus corpus;
 	private Dictionary<string, double> tf = new Dictionary<string, double>();
 	private string name = "";
@@ -25,26 +24,12 @@ public class Document
 		CalculateTF();
 	}
 
-	public string Name { get { return this.name; } }
-
-	public string Snippet { get { return this.snippet; } }
-
-	public string FilePath { get { return this.filePath; } }
-
-	public string[] Words { get { return this.words; } }
-	
-
-	public Vector GetVector()
-	{
-		return new Vector(this.tf, this.corpus);
-	}
-
 	/**
 		Para cada palabra del documento se va agnadiendo
 		su frequencia en el documento al diccionario tf
 		Al descubrise una palabra por primera vez en el
 		documento se aumenta su frequencia de aparicion
-		en los documentos mediante el diccionario dtf
+		en documentos mediante el diccionario dtf
 	*/
 	private void CalculateTF()
 	{
@@ -53,16 +38,13 @@ public class Document
 			if(!this.tf.ContainsKey(word))
 			{
 				this.tf[word] = 1;
-				if(!isQuery)
+				if(!this.corpus.DTF.ContainsKey(word))
 				{
-					if(!this.corpus.DTF.ContainsKey(word))
-					{
-						this.corpus.DTF[word] = 1;
-					}
-					else
-					{
-						this.corpus.DTF[word]++;
-					}
+					this.corpus.DTF[word] = 1;
+				}
+				else
+				{
+					this.corpus.DTF[word]++;
 				}
 			}
 			else
@@ -70,7 +52,7 @@ public class Document
 				this.tf[word]++;
 			}
 		}
-		// TF = repeticiones / cantidad_palabras_documento
+		// TF = repeticiones_palabra / cantidad_palabras_documento
 		foreach(string word in this.tf.Keys)
 		{
 			this.tf[word] /= this.words.Length;
@@ -80,11 +62,11 @@ public class Document
 	/**
 		Lee el documento y lo divide en palabras, manteniendo solamente
 		los caracteres alfanumericos y llevando el texto a minusculas
-		De igual forma guarda el nombre del archivo, su ubicacion
-		fisica y su snippet
+		Igualmente guarda el nombre del documento, su snippet y su
+		ubicacion o ruta de acceso
 		En caso de que el documento a crear corresponda al Query solo
-		se dividen las palabras de este, para ello se usa un identificador
-		delante de la ruta del archivo "q_"
+		se dividen las palabras de este, para identificar el Query
+		se usa un prefijo delante de la ruta del archivo: "q_"
 	*/
 	private void ReadDocument(string path)
 	{
@@ -95,13 +77,15 @@ public class Document
 				/**
 					Lee las lineas del archivo una por una utilizando UTF-8
 					como codificacion, lleva cada linea a minusculas y luego
-					las divide en palabras, eliminando las palabras vacias
+					las divide en palabras, eliminando los simbolos o caracteres
+					no alfanumericos y las palabras vacias
 				*/
 				this.words = File.ReadAllLines(path, Encoding.UTF8)
 					.SelectMany(line => r.Split(line.ToLower()))
 					.Where(w => !string.IsNullOrWhiteSpace(w))
 					.ToArray();
 
+				// Obtiene el Snippet para el documento
 				List<string> lines = new List<string>();
 				using(StreamReader sr = new StreamReader(path, Encoding.UTF8))
 				{
@@ -112,6 +96,7 @@ public class Document
 				}
 				this.snippet = string.Join(" ", lines);
 			}
+			// Lanza una excepcion en caso de un error de lectura del documento
 			catch
 			{
 				throw new IOException("Document not processed: "+path);
@@ -125,14 +110,22 @@ public class Document
 		}
 		else
 		{
-			/**
-				Proporciona un indicador que permite ignorar los
-				terminos del Query que no aparezcan en el Corpus
-			*/
-			this.isQuery = true;
-			// Para el caso del Query, divide en palabras su texto sin "q_"
+			// Divide en palabras el texto del Query eliminandole el prefijo "q_"
 			this.words = r.Split(path.Substring("q_".Length).ToLower())
 				.Where(w => !string.IsNullOrWhiteSpace(w)).ToArray();
 		}
+	}
+
+	public string Name { get { return this.name; } }
+
+	public string Snippet { get { return this.snippet; } }
+
+	public string FilePath { get { return this.filePath; } }
+
+	public string[] Words { get { return this.words; } }
+
+	public Vector GetVector()
+	{
+		return new Vector(this.tf, this.corpus.IDF);
 	}
 }

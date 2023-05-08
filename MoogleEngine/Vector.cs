@@ -16,11 +16,11 @@ public class Vector
 		Seguidamente calcula la magnitud del vector para su
 		posterior uso en el calculo de la similitud cosenica
 	*/
-	public Vector(Dictionary<string, double> tf, Corpus corpus)
+	public Vector(Dictionary<string, double> tf, Dictionary<string, double> idf)
 	{
-		this.items = new double[corpus.DTF.Count];
+		this.items = new double[idf.Count];
 		int i = 0;
-		foreach(string key in corpus.DTF.Keys)
+		foreach(string key in idf.Keys)
 		{
 			/**
 				El arreglo de componentes en el indice actual se hace
@@ -30,7 +30,7 @@ public class Vector
 				en su conjunto de palabras devuelve TF = 0
 			*/
 			this.items[i] = (tf.TryGetValue(
-					key, out double tfValue) ? tfValue : 0)*corpus.IDF[key];
+					key, out double tfValue) ? tfValue : 0)*idf[key];
 			i++;
 		}
 		CalculateNorm();

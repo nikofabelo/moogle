@@ -2,6 +2,7 @@ namespace MoogleEngine;
 
 // Coleccion de metodos para debug
 /**
+	Snippet para medicion de tiempos de ejecucion
 	int t0 = Environment.TickCount;
 	TimeSpan t = TimeSpan.FromMilliseconds(Environment.TickCount-t0);
 	Console.WriteLine(string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds));
