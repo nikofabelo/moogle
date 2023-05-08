@@ -85,16 +85,21 @@ public class Document
 					.Where(w => !string.IsNullOrWhiteSpace(w))
 					.ToArray();
 
-				// Obtiene el Snippet para el documento
+				// Obtiene un snippet de un minimo de 100 palabras para el documento
 				List<string> lines = new List<string>();
 				using(StreamReader sr = new StreamReader(path, Encoding.UTF8))
 				{
-					while(lines.Count < 18 && sr.Peek() > -1) // FIXME 18 ?
+					/**
+						La primera condicion se cumple siempre que no se haya alcanzado el
+						limite de 100 palabras del snippet y la segunda condicion siempre
+						que exista una nueva linea por leer
+					*/
+					while(lines.Sum(line => line.Split(' ').Length) < 100 && sr.Peek() > -1)
 					{
 						lines.Add(sr.ReadLine()!);
 					}
 				}
-				this.snippet = string.Join(" ", lines);
+				this.snippet = string.Join(" ", lines).TrimEnd()+"...";
 			}
 			// Lanza una excepcion en caso de un error de lectura del documento
 			catch

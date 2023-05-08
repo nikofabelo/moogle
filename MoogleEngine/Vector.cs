@@ -1,6 +1,6 @@
 namespace MoogleEngine;
 
-// Define un Vector de TF*IDF para los documentoss
+// Define un Vector de TF*IDF para los documentos
 public class Vector
 {
 	private double norm = 0;
@@ -11,8 +11,8 @@ public class Vector
 		del Vector igual al tamagno del banco de palabras
 		Para cada palabra del banco de palabras la agnade
 		al arreglo de componentes del Vector mediante
-		la multiplicacion de su TF en el documento del vector
-		y su IDF que viene del objeto del Corpus
+		la multiplicacion de su TF en el documento del Vector
+		y su IDF, que viene del objeto del Corpus
 		Seguidamente calcula la magnitud del vector para su
 		posterior uso en el calculo de la similitud cosenica
 	*/
@@ -30,7 +30,7 @@ public class Vector
 				en su conjunto de palabras devuelve TF = 0
 			*/
 			this.items[i] = (tf.TryGetValue(
-					key, out double tfValue) ? tfValue : 0)*idf[key];
+					key, out double value) ? value : 0) * idf[key];
 			i++;
 		}
 		CalculateNorm();

@@ -1,9 +1,10 @@
 namespace MoogleEngine;
 
+// Carga el Corpus de documentos y calcula el IDF
 public class Corpus
 {
+	private Dictionary<string, double> dtf = new Dictionary<string, double>();
 	private Dictionary<string, double> idf = new Dictionary<string, double>();
-	private Dictionary<string, int> dtf = new Dictionary<string, int>();
 	private Document[] documents = new Document[]{};
 
 	public Corpus(string path)
@@ -11,24 +12,6 @@ public class Corpus
 		ReadDocuments(path);
 		CalculateIDF();
 	}
-
-	public Dictionary<string, double> IDF { get { return this.idf; } }
-
-	public Dictionary<string, int> DTF
-	{
-		get
-		{
-			return this.dtf;
-		}
-		set
-		{
-			this.dtf = value;
-		}
-	}
-
-	public Document[] Documents { get { return this.documents; } }
-
-	public Matrix Matrix { get { return new Matrix(this.documents); } }
 
 	/**
 		Calcula el valor de IDF para cada palabra del
@@ -59,4 +42,22 @@ public class Corpus
 			this.documents[i] = new Document(directoryFiles[i], this);
 		}
 	}
+
+	public Dictionary<string, double> IDF { get { return this.idf; } }
+
+	public Dictionary<string, double> DTF
+	{
+		get
+		{
+			return this.dtf;
+		}
+		set
+		{
+			this.dtf = value;
+		}
+	}
+
+	public Document[] Documents { get { return this.documents; } }
+
+	public Matrix Matrix { get { return new Matrix(this.documents); } }
 }

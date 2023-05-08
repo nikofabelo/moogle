@@ -79,7 +79,6 @@
 		color: lightgray;
 	}
 	.suggestion {
-		animation: slide-in 1s ease-in-out;
 		background-color: rgba(0, 0, 0, 0.35);
 		border-radius: 20px;
 		color: #fff;
@@ -101,11 +100,16 @@
 			</svg>
 		</button>
 	</div>
-	@if(!string.IsNullOrEmpty(result.Suggestion) && result.Count<5) {
+	@if(!string.IsNullOrEmpty(result.Suggestion) && result.Count < 5) {
 		<div class="suggestion">
 			<p style="padding: 7px;">Quisistes decir: <b><i>
 				<a href="#" style="text-decoration: none;">@result.Suggestion</a>
 			</i></b></p>
+		</div>
+	}
+	@if(result.Count > 0) {
+		<div class="suggestion">
+			<p style="padding: 7px;">Resultados de la búsqueda: @result.Count</p>
 		</div>
 	}
 	<ul class="results">
