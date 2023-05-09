@@ -1,10 +1,4 @@
 # TODO
-## Class A
-> Check docs folder.
-> Implement Math in a separate class, and in it's full glory.
-> Refactor && Comment Moogle.cs
-> Show Suggestion.
-
 ## Class B
 > Add cross SVG:
 <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" viewBox="0 0 24 24" width="24" height="24">

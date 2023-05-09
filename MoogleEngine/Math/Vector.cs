@@ -13,10 +13,11 @@ public class Vector
 
 	public int Length { get { return this.items.Length; } }
 
+	// Define la suma entre Vectores
 	public static Vector operator +(Vector v, Vector w)
 	{
 		if(v.Length != w.Length)
-			throw new ArgumentException("Vectors have different length.");
+			throw new ArgumentException("Vectors can't have different length.");
 		double[] t = new double[v.Length];
 		for(int i = 0; i < v.Length; i++)
 		{
@@ -25,10 +26,11 @@ public class Vector
 		return new Vector(t);
 	}
 
+	// Define la multiplicacion entre Vectores
 	public static double operator *(Vector v, Vector w)
 	{
 		if(v.Length != w.Length)
-			throw new ArgumentException("Vectors have different length.");
+			throw new ArgumentException("Vectors can't have different length.");
 		double s = 0;
 		for(int i = 0; i < v.Length; i++)
 		{
@@ -37,6 +39,7 @@ public class Vector
 		return s;
 	}
 
+	// Define la multiplicacion de un Vector por un escalar
 	public static Vector operator *(Vector v, double s)
 	{
 		double[] t = new double[v.Length];
@@ -47,6 +50,7 @@ public class Vector
 		return new Vector(t);
 	}
 
+	// Define la resta entre Vectores
 	public static Vector operator -(Vector v, Vector w)
 	{
 		return v+(w*-1);

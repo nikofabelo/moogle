@@ -67,7 +67,10 @@ public class Moogle
 				document.FilePath, kvp.Value));
 		}
 
-		// TODO
+		/**
+			Calcula una sugerencia para cuando la búsqueda devuelva
+			pocos resultados, utilizando para esto el metodo de Levenshtein
+		*/
 		string suggestion = "";
 		if(ranking.Count < 5)
 		{
