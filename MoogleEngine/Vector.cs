@@ -45,9 +45,9 @@ public class Vector
 	{
 		for(int i = 0; i < this.items.Length; i++)
 		{
-			this.norm += Math.Pow(this.items[i], 2);
+			this.norm += System.Math.Pow(this.items[i], 2);
 		}
-		this.norm = Math.Sqrt(this.norm);
+		this.norm = System.Math.Sqrt(this.norm);
 	}
 
 	public double Norm { get { return this.norm; } }

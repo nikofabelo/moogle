@@ -22,7 +22,7 @@ public class Corpus
 		foreach(string word in this.dtf.Keys)
 		{
 			// IDF = log(cantidad_documentos / documentos_aparece_palabra)
-			this.idf[word] = Math.Log(this.documents.Length / this.dtf[word]);
+			this.idf[word] = System.Math.Log(this.documents.Length / this.dtf[word]);
 		}
 	}
 
