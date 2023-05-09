@@ -11,7 +11,20 @@ public class Matrix
 
 	public double[,] Items { get { return this.items; } }
 
-	public static Matrix operator*(Matrix a, Matrix b)
+	public static Matrix operator *(Matrix a, double s)
+	{
+		double[,] r = new double[a.Items.GetLength(0), a.Items.GetLength(1)];
+		for(int i = 0; i < a.Items.GetLength(0); i++)
+		{
+			for(int j = 0; j < a.Items.GetLength(1); j++)
+			{
+				r[i,j] = a.Items[i,j]*s;
+			}
+		}
+		return new Matrix(r);
+	}
+
+	public static Matrix operator *(Matrix a, Matrix b)
 	{
 		// x,y = fila, columna = 0,1
 		if(a.Items.GetLength(1) != b.Items.GetLength(0))
@@ -32,7 +45,7 @@ public class Matrix
 		return new Matrix(m);
 	}
 
-	public static Matrix operator+(Matrix a, Matrix b)
+	public static Matrix operator +(Matrix a, Matrix b)
 	{
 		if(a.Items.GetLength(0) != b.Items.GetLength(0)
 			|| a.Items.GetLength(1) != b.Items.GetLength(1))
@@ -48,5 +61,22 @@ public class Matrix
 			}
 		}
 		return new Matrix(c);
+	}
+
+	public static Matrix operator -(Matrix a, Matrix b)
+	{
+		if(a.Items.GetLength(0) != b.Items.GetLength(0) || a.Items.GetLength(1) != b.Items.GetLength(1))
+		{
+			throw new ArgumentException("Matrix dimensions are not compatible for substraction.");
+		}
+		double[,] r = new double[a.Items.GetLength(0), a.Items.GetLength(1)];
+		for(int i = 0; i < a.Items.GetLength(0); i++)
+		{
+			for(int j = 0; j < a.Items.GetLength(1); j++)
+			{
+				r[i,j] = a.Items[i,j]-b.Items[i,j];
+			}
+		}
+		return new Matrix(r);
 	}
 }

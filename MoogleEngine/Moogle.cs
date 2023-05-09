@@ -68,12 +68,28 @@ public class Moogle
 		}
 
 		// TODO
-		List<string> suggestionWords = new List<string>();
-		foreach(string word in query.Document.Words)
+		string suggestion = "";
+		if(ranking.Count < 5)
 		{
-			suggestionWords.Add("test");
+			Inform("Generating Suggestion...");
+			List<string> suggestionWords = new List<string>();
+			foreach(string word in query.Document.Words)
+			{
+				string replacement = word;
+				int c = int.MaxValue;
+				foreach(string key in corpus.DTF.Keys)
+				{
+					int d = LevenshteinDistance(word, key);
+					if(d < c && d > 1)
+					{
+						replacement = key;
+						c = d;
+					}
+				}
+				suggestionWords.Add(replacement);
+			}
+			suggestion = (suggestionWords.Count < 0) ? queryStr : string.Join(" ", suggestionWords);
 		}
-		string suggestion = (suggestionWords.Count < 0) ? queryStr : string.Join(" ", suggestionWords);
 
 		TimeSpan queryTime = TimeSpan.FromMilliseconds(
 			Environment.TickCount-callTime);
@@ -98,5 +114,38 @@ public class Moogle
 	public static void Inform(string msg)
 	{
 		Console.WriteLine("\x1b[33;40mMoogleEngine\x1b[0m: {0}", msg);
+	}
+
+	public int LevenshteinDistance(string a, string b)
+	{
+		int m = a.Length;
+		int n = b.Length;
+		int[,] d = new int[m + 1, n + 1];
+		for(int i = 0; i <= m; i++)
+		{
+			d[i, 0] = i;
+		}
+		for(int j = 0; j <= n; j++)
+		{
+			d[0, j] = j;
+		}
+		for(int j = 1; j <= n; j++)
+		{
+			for(int i = 1; i <= m; i++)
+			{
+				if(a[i-1] == b[j-1])
+				{
+					d[i, j] = d[i-1, j-1];
+				}
+				else
+				{
+					int deletion = d[i-1, j]+1;
+					int insertion = d[i, j-1]+1;
+					int substitution = d[i-1, j-1]+1;
+					d[i, j] = System.Math.Min(System.Math.Min(deletion, insertion), substitution);
+				}
+			}
+		}
+		return d[m, n];
 	}
 }
