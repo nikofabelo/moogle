@@ -8,6 +8,11 @@
 > Recreate Snippet.
 > Recreates Matrix on Content change.
 > Refactor project.
+Informe
+M / s
+Traspuesta
+Determinant
+V x V
 
 ## Algorithm
 <!-- > 1. Collect and preprocess your corpus: Collect the documents that you want to use for your search engine and preprocess them by removing stop words, stemming/lemmatizing the remaining words, and converting them to lowercase.
