@@ -1,0 +1,74 @@
+\section{Estructura y Algoritmo}
+
+\begin{frame}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+          \tableofcontents[sections={1-2},currentsection]
+        \end{column}
+        \begin{column}{.5\textwidth}
+          \tableofcontents[sections={3-4},currentsection]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Estructura y Algoritmo}
+\begin{frame}[fragile]
+Moogle! surge de dos componentes principales: \texttt{MoogleEngine} y \texttt{MoogleServer}.
+\newline El componente \texttt{MoogleServer} es el encargado de servir las páginas web, su funcionamiento no es sofisticado
+y la parte encargada de calcular los resultados de las búsquedas se encuentra totalmente implementada en \texttt{MoogleEngine}.
+\end{frame}
+
+\begin{frame}[fragile]
+El programa funciona en su conjunto de la siguiente manera.
+Dentro de la clase \texttt{Moogle} se cargan los documentos la primera vez que se hace una búsqueda,
+esto se consigue mediante el uso de un valor booleano que permite que el 
+procesamiento de los documentos ocurra solo una vez. De esta 
+manera no hay necesidad de tener que procesar los documentos cada 
+vez que se hace una nueva búsqueda.
+\end{frame}
+
+\begin{frame}[fragile]
+Primero que todo, se crea un objeto \texttt{Corpus} que carga todos los 
+documentos de la carpeta Content. Esto lo hace creando un array de objetos \texttt{Document}. En
+el momento de inicialización de los objetos \texttt{Document} estos 
+dividen el texto del documento al que hacen referencia en 
+palabras, lo llevan a minúsculas y eliminan carácteres especiales para mejorar las búsquedas.
+También se calcula el TF o frequencia de término de cada 
+palabra, que se va añadiendo a un diccionario. Cuando una 
+palabra aparece por primera vez en cada documento distinto se 
+aumenta también su frecuencia en otro diccionario DTF, que 
+indica la cantidad de documentos en los que aparece esa palabra.
+Luego de que se lean todos los documentos se procede a calcular 
+el IDF de cada palabra. Para con todos estos datos crear un objeto
+\texttt{Matrix}, que no es más que el recipiente de un arreglo de objetos 
+\texttt{Vector} que representan los vectores de TF-IDF de los 
+documentos, estos vectores tienen el tamaño del banco de 
+palabras.
+\end{frame}
+
+\begin{frame}[fragile]
+Una vez que se ha creado la matriz de vectores que representan 
+los documentos se procede a crear un \texttt{Vector} que represente al 
+\texttt{Query}, de dimensión igual a la dimensión de los vectores de los documentos.
+En este sentido, el objeto \texttt{Matrix} y el objeto \texttt{Query} solo son
+formas distintas de acceder a los vectores de TF-IDF que 
+representan la información.
+\pause \newline
+Cuando se tienen todos los vectores se calcula la similitud 
+cosénica entre el vector de búsqueda y los vectores de los documentos, se ordenan los resultados de la búsqueda según este valor dando prioridad a
+los valores más altos y seguidamente se envía un resultado de búsqueda mediante una clase \texttt{SearchResult} (que contiene instancias de
+otra clase \texttt{SearchItem}) a la página web, que lo maneja apropiadamente.
+\end{frame}
+
+
+
+
+
+% \begin{lstlisting}[basicstyle=\tiny]
+% \begin{center}
+%   \text{\Large My project title}\\
+%   \text{\small John Doe}\\
+%   \vspace{0.5cm}
+%   \text{\tiny Jul 14th, 2023}\\
+% \end{center}
+% \end{lstlisting}

@@ -1,0 +1,162 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{url}
+
+\begin{document}
+
+\title{
+    \textbf{Informe de Moogle!}
+}
+\author{Yoel N. Fabelo González}
+\date{20 de Julio, 2023}
+\maketitle
+
+\begin{figure}[h]
+    \center
+    \includegraphics[width=3cm]{matcom.jpg}
+\end{figure}
+
+\begin{abstract}
+    Este documento explica el funcionamiento de Moogle!, primer proyecto de la asignatura
+Programación de la carrera Lic. Ciencias de la Computación de la Universidad de La Habana.
+Se comentan estructura y algoritmo a partir de su orientación al paradigma de la
+Programación Orientada a Objetos (OOP).
+\end{abstract}
+
+\section{\textquestiondown Qu\'e es ``Moogle!''?}
+    Moogle! consiste en un motor de búsqueda y servidor web que sirve páginas de internet
+utilizando las tecnologías .NET y Blazor. Permite la búsqueda de un texto en un conjunto de
+documentos en formato \texttt{.txt} (text/plain), dentro de una carpeta Content. También permite
+acceder a estos documentos al hacer click encima de sus nombres de archivo que aparecen en color
+verde en la página de búsqueda. Siempre que los resultados de una búsqueda sean menores que 5, Moogle!
+recomendará una sugerencia de búsqueda con mayor probabilidad de aparecer en el cuerpo de documentos.
+    Para el funcionamiento de Moogle! se utiliza un \texttt{Modelo de Espacio Vectorial}\footnote{
+\url{https://es.wikipedia.org/wiki/Modelo_de_espacio_vectorial}}, y para medir la importancia de cada término determinado
+en el cuerpo de documentos se utiliza un valor de \texttt{TF-IDF}\footnote{\url{https://es.wikipedia.org/wiki/Tf-idf}}.
+
+\newpage
+\section{Estructura y Algoritmo}
+    Moogle! surge de dos componentes principales: \texttt{MoogleEngine} y \texttt{MoogleServer}.
+\newline El componente \texttt{MoogleServer} es el encargado de servir las páginas web, su funcionamiento no es sofisticado
+y la parte encargada de calcular los resultados de las búsquedas se encuentra totalmente implementada en \texttt{MoogleEngine}.
+\newline
+
+    El programa funciona en su conjunto de la siguiente manera.
+Dentro de la clase \texttt{Moogle} se cargan los documentos la primera vez que se hace una búsqueda,
+esto se consigue mediante el uso de un valor booleano que permite que el 
+procesamiento de los documentos ocurra solo una vez. De esta 
+manera no hay necesidad de tener que procesar los documentos cada 
+vez que se hace una nueva búsqueda.
+
+    Primero que todo, se crea un objeto \texttt{Corpus} que carga todos los 
+documentos de la carpeta Content. Esto lo hace creando un array de objetos \texttt{Document}. En
+el momento de inicialización de los objetos \texttt{Document} estos 
+dividen el texto del documento al que hacen referencia en 
+palabras, lo llevan a minúsculas y eliminan carácteres especiales para mejorar las búsquedas.
+También se calcula el TF o frequencia de término de cada 
+palabra, que se va añadiendo a un diccionario. Cuando una 
+palabra aparece por primera vez en cada documento distinto se 
+aumenta también su frecuencia en otro diccionario DTF, que 
+indica la cantidad de documentos en los que aparece esa palabra.
+Luego de que se lean todos los documentos se procede a calcular 
+el IDF de cada palabra. Para con todos estos datos crear un objeto
+\texttt{Matrix}, que no es más que el recipiente de un arreglo de objetos 
+\texttt{Vector} que representan los vectores de TF-IDF de los 
+documentos, estos vectores tienen el tamaño del banco de 
+palabras.
+
+    Una vez que se ha creado la matriz de vectores que representan 
+los documentos se procede a crear un \texttt{Vector} que represente al 
+\texttt{Query}, de dimensión igual a la dimensión de los vectores de los documentos.
+En este sentido, el objeto \texttt{Matrix} y el objeto \texttt{Query} solo son
+formas distintas de acceder a los vectores de TF-IDF que 
+representan la información.
+    Cuando se tienen todos los vectores se calcula la similitud 
+cosénica entre el vector de búsqueda y los vectores de los documentos, se ordenan los resultados de la búsqueda según este valor dando prioridad a
+los valores más altos y seguidamente se envía un resultado de búsqueda mediante una clase \texttt{SearchResult} (que contiene instancias de
+otra clase \texttt{SearchItem}) a la página web, que lo maneja apropiadamente.
+
+\newpage
+\section{MoogleEngine}
+    Este se compone de 6 clases importantes: \texttt{Corpus}, \texttt{Document}, \texttt{Matrix},
+\texttt{Vector}, \texttt{Query} y la clase \texttt{Moogle}, que contiene un método \texttt{Query}
+(el cual se encarga de procesar una búsqueda y de devolver sus resultados a la página web).
+
+\subsection{Moogle}
+    Constituye la clase principal de Moogle! pues contiene el método \texttt{Query!} que es el encargado de orquestar
+las funciones del motor de búsqueda. Primeramente se crea una instancia de \texttt{Corpus} que leerá los archivos de la carpeta
+Content y luego se crea una instancia de \texttt{Matrix} a partir de estos archivos. Como que solo se quiere realizar este proceso
+una vez entonces se hace uso de un flag que indica si el motor de búsqueda ha sido inicializado, al llamar al método \texttt{Query}
+este revisa si el motor ya se ha iniciado y en dicho caso no lo vuelve a iniciar. Una vez se tiene la matriz del corpus se toma una
+instancia del vector del query para con esta y los vectores documento calcular la similitud cosénica cuya fórmula es (1):
+\begin{equation}
+    cos = \frac{v \cdot w}{||v|| \cdot ||w||}
+\end{equation}\newline
+Los valores de similitud cosénica mayores que 0, osea, que tienen al menos una relevancia mínima para la búsqueda, son guardados en un
+diccionario que toma como llaves los objetos \texttt{Document}, el cual posteriormente se ordena descendientemente y es usado para crear
+instancias de \texttt{SearchItem} que se utilizan para inicializar un objeto \texttt{SearchResult}. Si la cantidad de resultados es menor
+que 5 entonces se calcula una sugerencia de búsqueda, para esto su utiliza el cálculo de distancia de Levenshtein. Se hace uso de una lista e
+iterando sobre las palabras del query se busca dentro del banco de palabras las palabras distintas y con mayor similitud a esta, en caso de encontrarse
+una de estas palabras se reemplaza en el query, el resultado final es un query con mayor probabilidad de arrojar resultados en la búsqueda. Para determinar
+cuan similiar es una palabra con otra usando Levenshtein se toman en cuenta la cantidad de inserciones, eliminaciones o substituciones de carácteres que
+se deben llevar a cabo entre dos palabras para que sean iguales, a menor valor de estas entonces más similares son las palabras entre sí. Para calcular
+la distancia de Levenshtein se crea una matriz cuyo tamaño es $(m + 1)\times (n + 1)$ donde $m$ y $n$ son el número de carácteres de cada cadena. Después
+de creada esta matriz se rellenan su primera fila y columna con los casos base. En caso de que los carácteres de las palabras sean iguales para sus determinados índices se mantiene el valor de distancia que los separa y en caso contrario se aumenta esta. Finalmente tanto el objeto \texttt{SearchResult}
+como la sugerencia se envían a la página que ha de mostrarlos.
+
+
+\subsection{Corpus}
+    Al conjunto de todos los documentos que aparezcan en la carpeta Content haremos referencia como \texttt{Corpus}.
+Este como clase contiene dos diccionarios: DTF e IDF, los cuales hacen referencia a la cantidad de veces que una palabra
+aparece en el corpus y al valor de IDF para un término en específico, respectivamente. Primero que todo se inicializan
+los documentos de la carpeta Content. Para ello se lee la lista de archivos de la carpeta Content, se crea un array de
+\texttt{Document} y se inicializan los documentos con las rutas de la lista de archivos.
+    Acto seguido se calcula el IDF (Inverse Document Frequency) para cada término. Inverse Document Frequency es un valor
+que se utiliza para contrarrestar en el TF-IDF términos que puedan tener valores de TF muy altos como artículos, preposiciones
+y conjunciones. La fórmula mediante la cual este se calcula es la siguiente (2):
+\begin{equation}
+    IDF_t = \log\left(\frac{\text{Cantidad de Documentos}}{DTF_t}\right)
+\end{equation}
+
+\subsection{Document}
+    Esta clase proporciona acceso al TF de los términos de los documentos, además de ocuparse de la lectura y
+preprocesamiento del texto de los archivos. Cada documento está asociado a un corpus de documentos, de esta manera puede
+registrar valores de su diccionario DTF. En comienzo se lee el archivo y se extraen sus palabras y frecuencias a partir
+de una ruta de archivo. Si la ruta al archivo no comienza con el prefijo especial que determina los objetos \texttt{Query} entonces
+se intenta procesar el texto del archivo indicado por la ruta, en caso de no poderse se lanza una excepción. Antes que todo se leen todas
+las líneas de texto del archivo usando la codificación UTF-8, se eliminan todos los carácteres no alfanuméricos y se lleva todo a minúsculas,
+separando por espacios el texto y eliminando los términos que consistan solo de carácteres blancos, obteniéndose un array de \texttt{string},
+llamado \texttt{words}. Después de esto se obtiene un snippet de un mínimo de 100 palabras del documento (siempre que sea posible), lo cual se
+logra leyendo lineas del archivo al que hace referencia la ruta de archivo hasta que la cantidad de palabras del snippet deje de ser menor de 100.
+    Por otra parte si la ruta de archivo proporcionada comienza con el prefijo inicial que indica que es el texto de un query, entonces
+se elimina el prefijo especial y se hace el mismo preprocesamiento sobre el texto del query, eliminando carácteres y llevando a minúsculas.
+
+\subsection{Matrix}
+    Esta clase actúa como un recipiente, ya que ella brinda una forma de acceder e indexar los
+vectores de todos los documentos del corpus. Para esto simplemente crea un array de objetos \texttt{Vector}
+que se relacionan a los vectores de TF-IDF de cada documento.
+
+\subsection{Vector}
+    La clase \texttt{Vector} define un vector de TF-IDF para cada documento. Este vector tiene el tamaño del
+banco de palabras y sus componentes consisten en el TF de cada término en el documento, multiplicado por su IDF.
+Al momento de crearse también se computa su norma, la cual es necesaria en el cálculo de la similitud
+cosénica y su fórmula es (3):
+\begin{equation}
+    ||v|| = \sqrt{\sum_{i=1}^{n} x_i^2}
+\end{equation}
+
+
+\subsection{Query}
+    Con el objetivo de simplificar el programa esta clase consiste fundamentalmente
+en brindar una capa de abstracción para tratar el texto de una búsqueda como si fuese
+un objeto \texttt{Document}. Esto se logra inicializando un objeto \texttt{Document} con
+una ruta de archivo compuesta de un prefijo especial seguido del texto de la búsqueda y que es
+reconocida por la clase \texttt{Document} durante su inicialización.
+
+\newpage
+\tableofcontents
+
+\end{document}

@@ -1,0 +1,64 @@
+\section{\textquestiondown Qu\'e es ``Moogle!''?}
+
+\begin{frame}
+    Moogle! consiste en un motor de búsqueda y servidor web que sirve páginas de internet
+utilizando las tecnologías .NET y Blazor. Permite la búsqueda de un texto en un conjunto de
+documentos en formato \texttt{.txt} (text/plain), dentro de una carpeta Content. También permite
+acceder a estos documentos al hacer click encima de sus nombres de archivo que aparecen en color
+verde en la página de búsqueda. Siempre que los resultados de una búsqueda sean menores que 5, Moogle!
+recomendará una sugerencia de búsqueda con mayor probabilidad de aparecer en el cuerpo de documentos.
+    Para el funcionamiento de Moogle! se utiliza un \texttt{Modelo de Espacio Vectorial}\footnote{
+\url{https://es.wikipedia.org/wiki/Modelo_de_espacio_vectorial}}, y para medir la importancia de cada término determinado
+en el cuerpo de documentos se utiliza un valor de \texttt{TF-IDF}\footnote{\url{https://es.wikipedia.org/wiki/Tf-idf}}.
+\end{frame}
+
+
+\begin{frame}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+          \tableofcontents[sections={1-2},currentsection]
+        \end{column}
+        \begin{column}{.5\textwidth}
+          \tableofcontents[sections={3-4},currentsection]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\subsection{Ventajas y desventajas}
+\begin{frame}{Ventajas y desventajas}
+
+Ventajas:
+\begin{itemize}
+  \item Representación eficiente de documentos
+  \item Búsqueda basada en relevancia
+  \item Flexibilidad en la consulta
+  \item Escalabilidad
+  \item Personalización y recomendaciones
+\end{itemize}
+
+\pause
+
+Desventajas:
+\begin{itemize}
+  \item Limitaciones en la representación semántica
+  \item Sensibilidad a la calidad de los datos de texto
+\end{itemize}
+
+\end{frame}
+
+\subsection{Ejecución}
+
+\begin{frame}{\textquestiondown Cómo ejecutar ``Moogle!''?}
+
+\begin{block}{Linux}
+  En la raíz del proyecto ejecutar:\\[2mm]
+  \textbf{Ubuntu}: \texttt{make dev}\\
+\end{block}
+
+\begin{block}{Cualquier otro SO}
+  En la raíz del proyecto ejecutar:\\[2mm]
+  \texttt{dotnet watch run --project MoogleServer}\\
+\end{block}
+
+\end{frame}
