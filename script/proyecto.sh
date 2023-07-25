@@ -36,8 +36,8 @@ elif [ "$1" == "show_slides" ]; then
     fi
   fi
 elif [ "$1" == "clean" ]; then
-  cd ../informe && rm -rf **/*.aux **/*.fdb_latexmk **/*.fls **/*.log **/*.nav **/*.vrb **/*.snm **/*.toc **/*.pdf
-  cd ../presentacion && rm -rf **/*.aux **/*.fdb_latexmk **/*.fls **/*.log **/*.nav **/*.vrb **/*.snm **/*.toc **/*.pdf && cd ../script
+  cd ../informe && rm -rf *.aux *.fdb_latexmk *.fls *.log *.nav *.vrb *.snm *.toc *.pdf
+  cd ../presentacion && rm -rf *.aux *.fdb_latexmk *.fls *.log *.nav *.vrb *.snm *.toc *.pdf sections/*.aux && cd ../script
 else
   printf "Provide an argument:\nrun\nreport\nslides\nshow_report\nshow_slides\nclean\n"
 fi
