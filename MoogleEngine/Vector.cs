@@ -20,7 +20,7 @@ public class Vector
 	{
 		this.items = new double[idf.Count];
 		int i = 0;
-		foreach(string key in idf.Keys)
+		foreach (string key in idf.Keys)
 		{
 			/**
 				El arreglo de componentes en el indice actual se hace
@@ -43,7 +43,7 @@ public class Vector
 	*/
 	private void CalculateNorm()
 	{
-		for(int i = 0; i < this.items.Length; i++)
+		for (int i = 0; i < this.items.Length; i++)
 		{
 			this.norm += System.Math.Pow(this.items[i], 2);
 		}

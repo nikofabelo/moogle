@@ -19,7 +19,7 @@ public class Corpus
 	*/
 	private void CalculateIDF()
 	{
-		foreach(string word in this.dtf.Keys)
+		foreach (string word in this.dtf.Keys)
 		{
 			// IDF = log(cantidad_documentos / documentos_aparece_palabra)
 			this.idf[word] = System.Math.Log(this.documents.Length / this.dtf[word]);
@@ -36,9 +36,9 @@ public class Corpus
 		string[] directoryFiles = Directory.GetFiles(
 			path.Replace('/', Path.DirectorySeparatorChar), "*.txt");
 		this.documents = new Document[directoryFiles.Length];
-		for(int i = 0; i < this.documents.Length; i++)
+		for (int i = 0; i < this.documents.Length; i++)
 		{
-			Moogle.Inform("Reading Document ("+(i+1)+"/"+directoryFiles.Length+")\n\t"+directoryFiles[i]);
+			Moogle.Inform("Reading Document (" + (i + 1) + "/" + directoryFiles.Length + ")\n\t" + directoryFiles[i]);
 			this.documents[i] = new Document(directoryFiles[i], this);
 		}
 	}

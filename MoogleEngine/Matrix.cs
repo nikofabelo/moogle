@@ -11,7 +11,7 @@ public class Matrix
 	public Matrix(Document[] documents)
 	{
 		this.vectors = new Vector[documents.Length];
-		for(int i = 0; i < this.vectors.Length; i++)
+		for (int i = 0; i < this.vectors.Length; i++)
 		{
 			this.vectors[i] = documents[i].GetVector();
 		}

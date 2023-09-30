@@ -8,21 +8,25 @@
 			opacity: 0;
 			transform: translateY(-50px);
 		}
+
 		100% {
 			opacity: 1;
 			transform: translateY(0);
 		}
 	}
+
 	@@-webkit-keyframes slide-in {
 		0% {
 			transform: translateY(100%);
 			opacity: 0;
 		}
+
 		100% {
 			transform: translateY(0);
 			opacity: 1;
 		}
 	}
+
 	body {
 		background-attachment: fixed;
 		background-image: url('img/main.jpg');
@@ -36,6 +40,7 @@
 		padding: 34% 0;
 		text-shadow: 2px 2px #404040;
 	}
+
 	h1 {
 		animation: fade-in 1s ease-in-out;
 		color: yellow;
@@ -43,13 +48,16 @@
 		font-weight: inherit;
 		text-shadow: inherit;
 	}
+
 	.btn:focus {
 		box-shadow: none;
 	}
+
 	.content {
 		height: 100vh;
 		position: relative;
 	}
+
 	.item {
 		animation: slide-in 1s ease-in-out;
 		background-color: rgba(0, 0, 0, 0.4);
@@ -59,6 +67,7 @@
 		padding: 10px;
 		text-align: left;
 	}
+
 	.search-box {
 		animation: fade-in 1s ease-in-out;
 		background-color: rgba(0, 0, 0, 0.3);
@@ -66,6 +75,7 @@
 		display: inline-flex;
 		width: 50%;
 	}
+
 	.search-box input {
 		background-color: transparent;
 		border: none;
@@ -75,9 +85,11 @@
 		padding: 5px 25px;
 		width: 100%;
 	}
+
 	.search-box input::placeholder {
 		color: lightgray;
 	}
+
 	.suggestion {
 		background-color: rgba(0, 0, 0, 0.35);
 		border-radius: 20px;
@@ -96,24 +108,28 @@
 		<input @bind="query" onfocus="this.style.outline='none';" placeholder="Introduzca su búsqueda...">
 		<button @onclick="RunQuery" class="btn">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" height="24" width="24" viewBox="0 0 24 24">
-				<path d="M9.5 16a6.5 6.5 0 1 1 4.798-2.13l4.45 4.45a1 1 0 0 1-1.414 1.414l-4.45-4.45A6.445 6.445 0 0 1 9.5 16zm0-11a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
+				<path
+					d="M9.5 16a6.5 6.5 0 1 1 4.798-2.13l4.45 4.45a1 1 0 0 1-1.414 1.414l-4.45-4.45A6.445 6.445 0 0 1 9.5 16zm0-11a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z" />
 			</svg>
 		</button>
 	</div>
-	@if(!string.IsNullOrEmpty(result.Suggestion) && result.Count < 5) {
+	@if (!string.IsNullOrEmpty(result.Suggestion) && result.Count < 5)
+	{
 		<div class="suggestion">
 			<p style="padding: 7px;">Quisistes decir: <b><i>
-				<a href="#" style="text-decoration: none;">@result.Suggestion</a>
-			</i></b></p>
+						<a href="#" style="text-decoration: none;">@result.Suggestion</a>
+					</i></b></p>
 		</div>
 	}
-	@if(result.Count > 0) {
+	@if (result.Count > 0)
+	{
 		<div class="suggestion">
 			<p style="padding: 7px;">Resultados de la búsqueda: @result.Count</p>
 		</div>
 	}
 	<ul class="results">
-		@foreach(var item in result.Items()) {
+		@foreach (var item in result.Items())
+		{
 			<li>
 				<div class="item">
 					<a href=@item.FilePath target="_blank"
@@ -131,7 +147,8 @@
 	private SearchResult result = new SearchResult();
 	private string query = "";
 
-	private void RunQuery() {
+	private void RunQuery()
+	{
 		result = moogleEngine.Query(query);
 	}
 }

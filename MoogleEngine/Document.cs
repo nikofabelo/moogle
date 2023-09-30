@@ -11,7 +11,7 @@ public class Document
 	private string name = "";
 	private string snippet = "";
 	private string filePath = "";
-	private string[] words = new string[]{};
+	private string[] words = new string[] { };
 
 	// Constante de expresion regular que elimina todos los caracteres excepto los alfanumericos
 	static readonly Regex r = new Regex("[^a-z0-9]", RegexOptions.Compiled);
@@ -33,12 +33,12 @@ public class Document
 	*/
 	private void CalculateTF()
 	{
-		foreach(string word in this.words)
+		foreach (string word in this.words)
 		{
-			if(!this.tf.ContainsKey(word))
+			if (!this.tf.ContainsKey(word))
 			{
 				this.tf[word] = 1;
-				if(!this.corpus.DTF.ContainsKey(word))
+				if (!this.corpus.DTF.ContainsKey(word))
 				{
 					this.corpus.DTF[word] = 1;
 				}
@@ -53,7 +53,7 @@ public class Document
 			}
 		}
 		// TF = repeticiones_palabra / cantidad_palabras_documento
-		foreach(string word in this.tf.Keys)
+		foreach (string word in this.tf.Keys)
 		{
 			this.tf[word] /= this.words.Length;
 		}
@@ -70,7 +70,7 @@ public class Document
 	*/
 	private void ReadDocument(string path)
 	{
-		if(!path.StartsWith("q_"))
+		if (!path.StartsWith("q_"))
 		{
 			try
 			{
@@ -87,31 +87,31 @@ public class Document
 
 				// Obtiene un snippet de un minimo de 100 palabras para el documento
 				List<string> lines = new List<string>();
-				using(StreamReader sr = new StreamReader(path, Encoding.UTF8))
+				using (StreamReader sr = new StreamReader(path, Encoding.UTF8))
 				{
 					/**
 						La primera condicion se cumple siempre que no se haya alcanzado el
 						limite de 100 palabras del snippet y la segunda condicion siempre
 						que exista una nueva linea por leer
 					*/
-					while(lines.Sum(line => line.Split(' ').Length) < 100 && sr.Peek() > -1)
+					while (lines.Sum(line => line.Split(' ').Length) < 100 && sr.Peek() > -1)
 					{
 						lines.Add(sr.ReadLine()!);
 					}
 				}
-				this.snippet = string.Join(" ", lines).TrimEnd()+"...";
+				this.snippet = string.Join(" ", lines).TrimEnd() + "...";
 			}
 			// Lanza una excepcion en caso de un error de lectura del documento
 			catch
 			{
-				throw new IOException("Document not processed: "+path);
+				throw new IOException("Document not processed: " + path);
 			}
 			this.name = Path.GetFileNameWithoutExtension(path);
 			/**
 				Prepara la ruta de acceso al archivo mediante el uso
 				de /Content/NombreArchivo, configurado en MoogleServer
 			*/
-			this.filePath = "/Content/"+this.name+".txt";
+			this.filePath = "/Content/" + this.name + ".txt";
 		}
 		else
 		{

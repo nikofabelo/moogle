@@ -14,7 +14,7 @@ public class Query
 			del Query con el identificador "q_" que sirve
 			para diferenciar el Query de los demas documentos
 		*/
-		this.document = new Document("q_"+query, corpus);
+		this.document = new Document("q_" + query, corpus);
 		this.queryVector = this.document.GetVector();
 	}
 
