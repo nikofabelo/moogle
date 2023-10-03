@@ -1,22 +1,30 @@
 # TODO
+
 ## Class B
+
 > Add cross SVG:
+
 <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="lightgray" viewBox="0 0 24 24" width="24" height="24">
 	<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
 </svg> -->
+
 > Make Enter be click.
 > Recreate Snippet.
 > Recreates Matrix on Content change.
 > Refactor project.
-Informe
-M / s
-Traspuesta
-Determinant
-V x V
+> Suggestion click.
+> Books page.
+> Result box.
+> Informe
+> M / s
+> Traspuesta
+> Determinant
+> V x V
 
 ## Algorithm
+
 <!-- > 1. Collect and preprocess your corpus: Collect the documents that you want to use for your search engine and preprocess them by removing stop words, stemming/lemmatizing the remaining words, and converting them to lowercase.
-> 2. Build the document-term matrix: Build a document-term matrix where each row represents a document and each column represents a term in the corpus vocabulary. The values in the matrix can be the raw term frequency or the TF-IDF weight of the corresponding term in the document. 
+> 2. Build the document-term matrix: Build a document-term matrix where each row represents a document and each column represents a term in the corpus vocabulary. The values in the matrix can be the raw term frequency or the TF-IDF weight of the corresponding term in the document.
 > 3. Normalize the document vectors: Normalize the document vectors to have unit length. This is done by dividing each document vector by its Euclidean length.
 > 4. Process the query: Preprocess the query in the same way as the documents.
 > 5. Build the query vector: Build a query vector that represents the query in the same vector space as the document vectors. The query vector can be constructed using the same vocabulary and term weighting scheme as the document-term matrix.
@@ -24,11 +32,7 @@ V x V
 > 7. Rank the results: Rank the search results by their cosine similarity scores in descending order. The top-ranked documents are the most relevant to the query.
 > 8. Present the results: Present the search results to the user in a user-friendly way, such as by displaying the document titles and snippets or by providing links to the full documents. -->
 
-
-
-
-
-<!-- 
+<!--
 - No podemos limitarnos a los documentos donde aparece exactamente la frase introducida por el usuario.
 - En primer lugar, el usuario puede buscar no solo una palabra sino en general una frase cualquiera.
 - Si no aparecen todas las palabras de la frase en un documento, pero al menos aparecen algunas, este documento también queremos que sea devuelto, pero con un
@@ -52,32 +56,37 @@ V x V
 - Simbolo ! no debe aparecer la palabra.
 - Simbolo ^ debe aparecer en cualquier documento.
 - Simbolo ~ debe hacer que las palabras aparezcan por defecto unidas mientras mas alto mas score.
-- Simbolo * adquiere prioridad la palabra por cada uno que aparezca.
+- Simbolo \* adquiere prioridad la palabra por cada uno que aparezca.
 - Simbolos >< palabra1 aparece +/- que palabra2.
 - Palabras similares misma raiz devolver score menor.
 - Palabra similares aun menor score.
 - Con menos de 5 resultados brindar suggestion de la clase SearchResult con query similar pero existente.
 - Strings similares: Distancia Levenshtein, Similitud cosénica.
 
-
-
 # Exposicion: se presentan mejoras.
+
 ## 2. Informe escrito
-El informe escrito debe describir la solución presentada en suficiente detalle que permita evaluar su correctitud. Por este motivo no debe solamente mencionar las funcionalidades implementadas, sino además explicar en detalle la representación de los documentos y consultas así como cada algoritmo implementado que no sea trivial (e.j., la búsqueda secuencial en un *array* es trivial).
+
+El informe escrito debe describir la solución presentada en suficiente detalle que permita evaluar su correctitud. Por este motivo no debe solamente mencionar las funcionalidades implementadas, sino además explicar en detalle la representación de los documentos y consultas así como cada algoritmo implementado que no sea trivial (e.j., la búsqueda secuencial en un _array_ es trivial).
 Criterios a tener en cuenta sobre el contenido:
+
 - 2.a) Descripción de la arquitectura básica del proyecto y el flujo de los datos durante la ejecución de la búsqueda.
 - 2.b) Descripción de las funcionalidades implementadas en términos de su uso, e.j., los operadores existentes.
 - 2.c) Descripción de la modelación empleada para representar los documentos y consultas, y para computar una función de ranking.
 - 2.d) Descripción del funcionamiento de los algoritmos no triviales implementados.
-Además del contenido, se tendrán en cuenta criterios sobre la redacción del documento.
+  Además del contenido, se tendrán en cuenta criterios sobre la redacción del documento.
 - 2.e) Correctitud ortográfica y gramatical.
 - 2.f) Claridad y legibilidad en las explicaciones.
+
 ## 3. Exposición oral
+
 - 3.a) Presentación de las ideas más importantes del proyecto: la arquitectura del sistema, la representación de los documentos y consultas, y el criterio de ranking.
 - 3.b) Presentación de los detalles de implementación más notables del proyecto
 - 3.c) Calidad general de la presentación, incluyendo fluidez, claridad en las ideas, y buena dicción.
 - 3.d) Respuesta a las preguntas formuladas demostrando dominio del proyecto y comprensión profunda de las ideas fundamentales del proyecto y los detalles técnicos.
+
 ## 4. Extras
+
 - 4.a) Implementación eficiente del cómputo de ranking a partir de operaciones matriciales.
 - 4.b) Implementación de operadores adicionales no descritos en la orientación.
 - 4.c) Implementación de transformaciones sintácticas o morfológicas (e.j., _stemming_ o lematización).
