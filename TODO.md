@@ -6,13 +6,13 @@
 - README.md
 - Readme_Old.md
 - Evaluation.md
-- .gitignore
 - Content
 - Informe
 - MoogleEngine
 - MoogleServer
 - Presentacion
 - Script
+- .git
 
 ## Class B
 
